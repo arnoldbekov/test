@@ -354,6 +354,12 @@
 }
 
 /* Favorites section modifier */
+.favorites .object-card,
+.favorites .gallery-card {
+  min-height: 320px;
+  padding-bottom: 0.75rem;
+}
+
 .favorites .object-card__description {
   margin: 0.25rem 0 0.6rem 0;
   -webkit-line-clamp: 2;
@@ -365,13 +371,14 @@
 /* Растягиваем изображения в избранном на всю ширину карточки и центрируем */
 .favorites .gallery-thumb {
   width: 100%;
+  height: 200px;
   margin: 0;
   padding: 0;
   border-radius: 20px 20px 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f5f5dc;
+  background: transparent;
   overflow: hidden;
   position: relative;
 }
