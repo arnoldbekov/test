@@ -216,7 +216,9 @@ function setupMapTooltips(mapElement, tooltipId) {
 
   mapElement.addEventListener('click', (evt) => {
     if (appState.isSelectingStartPoint) return;
-    if (evt.target.closest('.tooltip-details-btn')) return;
+    if (evt.target.closest('.tooltip-details-btn') || evt.target.classList.contains('tooltip-details-btn')) {
+      return;
+    }
     const zone = evt.target.closest('.map-zone');
     if (!zone) {
       if (!tooltip.contains(evt.target)) {
@@ -230,7 +232,16 @@ function setupMapTooltips(mapElement, tooltipId) {
     }
   });
 
+  tooltip.addEventListener('click', (evt) => {
+    if (evt.target.closest('.tooltip-details-btn') || evt.target.classList.contains('tooltip-details-btn')) {
+      evt.stopPropagation();
+    }
+  });
+
   mapWrapper.addEventListener('click', (evt) => {
+    if (evt.target.closest('.tooltip-details-btn') || evt.target.classList.contains('tooltip-details-btn')) {
+      return;
+    }
     if (!tooltip.contains(evt.target) && !evt.target.closest('.map-zone')) {
       hideTooltip(true);
     }
@@ -678,9 +689,16 @@ function setupMapTooltipsForModal() {
     tooltipDetailsBtn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      if (currentPlace && typeof window.openObjectModal === 'function') {
+      e.stopImmediatePropagation();
+      if (currentPlace) {
         hideTooltip(true);
-        window.openObjectModal(currentPlace);
+        setTimeout(() => {
+          if (typeof window.openObjectModal === 'function') {
+            window.openObjectModal(currentPlace);
+          } else {
+            console.error('openObjectModal function not found');
+          }
+        }, 100);
       }
     });
   }
@@ -723,7 +741,9 @@ function setupMapTooltipsForModal() {
 
   map.addEventListener('click', (evt) => {
     if (isPanning) return;
-    if (evt.target.closest('.tooltip-details-btn')) return;
+    if (evt.target.closest('.tooltip-details-btn') || evt.target.classList.contains('tooltip-details-btn')) {
+      return;
+    }
     const zone = evt.target.closest('.map-zone');
     if (!zone) {
       if (!tooltip.contains(evt.target)) {
@@ -734,6 +754,12 @@ function setupMapTooltipsForModal() {
     const place = appState.places.find(p => p.id === Number(zone.dataset.id));
     if (place) {
       showTooltip(zone, place, true);
+    }
+  });
+
+  tooltip.addEventListener('click', (evt) => {
+    if (evt.target.closest('.tooltip-details-btn') || evt.target.classList.contains('tooltip-details-btn')) {
+      evt.stopPropagation();
     }
   });
 

@@ -50,16 +50,6 @@
 .hero__grid > .hero__content:first-child {
   animation: fadeInLeft 0.8s ease-out 0.2s both;
   position: relative;
-  overflow: hidden;
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-
-.hero__grid > .hero__content:first-child::-webkit-scrollbar,
-.hero__grid > .hero__content:first-child *::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
 }
 
 .hero__grid .hero__card {
@@ -78,19 +68,14 @@
   backdrop-filter: blur(20px) saturate(180%);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  overflow: hidden !important;
-  overflow-y: hidden !important;
-  overflow-x: hidden !important;
-  scrollbar-width: none !important;
-  -ms-overflow-style: none !important;
+  overflow: hidden;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.hero__card::-webkit-scrollbar,
-.hero__card *::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
+.hero__card::-webkit-scrollbar {
+  display: none;
 }
 
 .hero__card::before {
@@ -161,16 +146,6 @@
   gap: 3rem;
   align-items: center;
   animation: fadeInUp 0.8s ease-out;
-  overflow: hidden;
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-
-.hero-grid::-webkit-scrollbar,
-.hero-grid *::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
 }
 
 .hero-grid > div:first-child {
@@ -279,49 +254,14 @@
   .hero,
   .hero-section {
     padding: 3rem 0 5rem;
-    overflow-x: hidden !important;
   }
   .hero__grid,
   .hero-grid {
     gap: 1.5rem;
-    overflow-x: hidden !important;
-    overflow-y: hidden !important;
-  }
-  .hero__grid::-webkit-scrollbar,
-  .hero-grid::-webkit-scrollbar,
-  .hero__grid *::-webkit-scrollbar,
-  .hero-grid *::-webkit-scrollbar {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
-  }
-  .hero__content,
-  .hero__grid > .hero__content:first-child {
-    overflow-x: hidden !important;
-    overflow-y: hidden !important;
-  }
-  .hero__content::-webkit-scrollbar,
-  .hero__grid > .hero__content:first-child::-webkit-scrollbar,
-  .hero__content *::-webkit-scrollbar,
-  .hero__grid > .hero__content:first-child *::-webkit-scrollbar {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
   }
   .hero__card,
   .hero-card {
     padding: 1.5rem 1.75rem;
-    overflow: hidden !important;
-    overflow-y: hidden !important;
-    overflow-x: hidden !important;
-  }
-  .hero__card::-webkit-scrollbar,
-  .hero__card *::-webkit-scrollbar,
-  .hero-card::-webkit-scrollbar,
-  .hero-card *::-webkit-scrollbar {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
   }
   .hero__logo,
   .hero-logo {
@@ -340,23 +280,6 @@
     padding: 1.25rem 1.5rem;
     border-radius: 16px;
     display: none;
-    overflow: hidden !important;
-    overflow-y: hidden !important;
-    overflow-x: hidden !important;
-  }
-  .hero__content,
-  .hero__grid > .hero__content:first-child {
-    overflow: hidden !important;
-    overflow-y: hidden !important;
-    overflow-x: hidden !important;
-  }
-  .hero__content::-webkit-scrollbar,
-  .hero__content *::-webkit-scrollbar,
-  .hero__grid > .hero__content:first-child::-webkit-scrollbar,
-  .hero__grid > .hero__content:first-child *::-webkit-scrollbar {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
   }
   .hero__logo,
   .hero-logo {
