@@ -124,7 +124,7 @@ body:has(#pmrMapRoutes) .map-section__wrapper {
 }
 
 body:has(#pmrMapRoutes) .map-and-list .map-wrapper {
-  height: 600px;
+  height: 800px;
 }
 
 #pmrMap {
@@ -153,12 +153,12 @@ body:has(#pmrMapRoutes) .map-and-list .map-wrapper {
 }
 
 .map-and-list .map-wrapper {
-  height: 600px;
+  height: 800px;
   margin-bottom: 0;
 }
 
 .map-and-list .objects-grid {
-  max-height: 600px;
+  max-height: 800px;
   overflow-y: auto;
 }
 
@@ -435,7 +435,7 @@ body:has(#pmrMapRoutes) .map__wrapper {
 
 body:has(#pmrMapRoutes) .map-and-list .map-wrapper,
 body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
-  height: 600px;
+  height: 800px;
 }
 
 .map-controls,
@@ -614,6 +614,17 @@ body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
   transform: translateY(0);
 }
 
+.tooltip-sticky {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  z-index: 15 !important;
+}
+
+.tooltip-sticky .tooltip-content {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  border-width: 3px;
+}
+
 .pin-ancient { fill: #D4AF37; }
 .pin-medieval { fill: #8B0000; }
 .pin-modern { fill: #1E3A5F; }
@@ -701,11 +712,11 @@ body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
     gap: 1.5rem;
   }
   .map-and-list .map-wrapper {
-    height: 400px;
+    height: 500px;
   }
   .map-and-list .objects-grid {
-    max-height: none;
-    overflow-y: visible;
+    max-height: 500px;
+    overflow-y: auto;
   }
   .map-tooltip,
   .map__tooltip {
@@ -784,11 +795,11 @@ body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
     gap: 1rem;
   }
   .map-and-list .map-wrapper {
-    height: 350px;
+    height: 400px;
   }
   .map-and-list .objects-grid {
-    max-height: none;
-    overflow-y: visible;
+    max-height: 400px;
+    overflow-y: auto;
   }
   .map-tooltip,
   .map__tooltip {
