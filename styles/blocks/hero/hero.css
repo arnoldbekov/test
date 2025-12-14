@@ -316,6 +316,23 @@
     padding: 1.25rem 1.5rem;
     border-radius: 16px;
     display: none;
+    overflow: hidden !important;
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+  }
+  .hero__content,
+  .hero__grid > .hero__content:first-child {
+    overflow: hidden !important;
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+  }
+  .hero__content::-webkit-scrollbar,
+  .hero__content *::-webkit-scrollbar,
+  .hero__grid > .hero__content:first-child::-webkit-scrollbar,
+  .hero__grid > .hero__content:first-child *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
   .hero__logo,
   .hero-logo {
