@@ -489,6 +489,7 @@
   }
   .object-card {
     padding: 1rem;
+    min-height: 300px;
   }
   .object-card-image,
   .object-card__image {
@@ -503,6 +504,14 @@
   .object-card p {
     font-size: 0.85rem;
     margin: 0.3rem 0 0.5rem 0;
+  }
+  .object-actions {
+    margin-top: 0.5rem;
+  }
+  .object-actions .btn-secondary {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    width: 100%;
   }
   .object-actions {
     margin-top: 0.4rem;
