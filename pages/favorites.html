@@ -271,19 +271,19 @@ function renderFavoritesPlaces() {
     const hasOldImage = place.images && place.images.old && place.images.old.trim() !== '';
     const hasBothImages = hasOldImage && hasImage;
     return `
-      <article class="object-card gallery-card" itemscope itemtype="https://schema.org/TouristAttraction" tabindex="0" aria-label="${hasBothImages ? 'Сравнить тогда и сейчас' : 'Просмотреть фото'}: ${place.name || ''}">
+      <article class="gallery-card" itemscope itemtype="https://schema.org/TouristAttraction" tabindex="0" aria-label="${hasBothImages ? 'Сравнить тогда и сейчас' : 'Просмотреть фото'}: ${place.name || ''}">
         ${hasImage ? `
         <div class="gallery-thumb">
-          <img class="object-card__image gallery-section__card-image" src="${normalizeImagePathFunc(place.images.now)}" alt="${place.name || ''}" loading="lazy" onerror="this.style.display='none'">
-          <button class="favorite-btn active" data-id="${place.id}" data-type="place" aria-label="Убрать из избранного" title="Убрать из избранного">
+          <img src="${normalizeImagePathFunc(place.images.now)}" alt="${place.name || ''}" loading="lazy" onerror="this.style.display='none'">
+          <button class="favorite-btn gallery-favorite active" data-id="${place.id}" data-type="place" aria-label="Убрать из избранного" title="Убрать из избранного">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
             </svg>
           </button>
         </div>
         ` : ''}
-        <h3 class="object-card__title gallery-section__card-title" itemprop="name">${place.name || ''}</h3>
-        <p class="object-card__description gallery-section__card-description" itemprop="temporalCoverage">${getPeriodNameFunc(place.period)} • ${getTypeNameFunc(place.type)}</p>
+        <h3 itemprop="name">${place.name || ''}</h3>
+        <p itemprop="temporalCoverage">${getPeriodNameFunc(place.period)} • ${getTypeNameFunc(place.type)}</p>
         ${place.address ? `<meta itemprop="address" content="${place.address}">` : ''}
         <button type="button" class="btn-secondary" data-id="${place.id}" data-has-old="${hasOldImage}">${hasBothImages ? 'Тогда и сейчас' : 'Просмотреть фото'}</button>
       </article>
