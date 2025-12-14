@@ -1,0 +1,192 @@
+@import url("../../common/_vars.css");
+
+/* Stats Section Block */
+.stats-section {
+  padding: 4rem 0;
+  background: #ffffff;
+}
+
+.stats-section__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.stats-section__list {
+  margin-top: 0.9rem;
+  list-style: none;
+  padding: 0;
+}
+
+.stats-section__list li + li {
+  margin-top: 0.4rem;
+}
+
+.stats-section__chart-wrapper {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.2rem;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+}
+
+.stats-section__chart-wrapper canvas {
+  cursor: pointer;
+}
+
+/* Period Modal Block */
+.period-modal__count {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+.period-modal__objects-list {
+  display: grid;
+  gap: 1rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.period-modal__object-item {
+  padding: 1.25rem;
+  background: #faf5e6;
+  border-radius: 12px;
+  border: 1px solid var(--border-soft);
+  transition: all 0.3s ease;
+}
+
+.period-modal__object-item:hover {
+  background: #f2e5c9;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.period-modal__object-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: var(--navy);
+}
+
+.period-modal__object-meta {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.period-modal__object-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0.75rem 0;
+  color: var(--text);
+}
+
+.period-modal__object-item .btn-secondary {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 992px) {
+  .stats-section__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Legacy support for backward compatibility */
+.stats-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.stats-list {
+  margin-top: 0.9rem;
+  list-style: none;
+  padding: 0;
+}
+
+.stats-list li + li {
+  margin-top: 0.4rem;
+}
+
+.chart-wrapper {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.2rem;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+}
+
+.chart-wrapper canvas {
+  cursor: pointer;
+}
+
+.period-modal-count {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+.period-objects-list {
+  display: grid;
+  gap: 1rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.period-object-item {
+  padding: 1.25rem;
+  background: #faf5e6;
+  border-radius: 12px;
+  border: 1px solid var(--border-soft);
+  transition: all 0.3s ease;
+}
+
+.period-object-item:hover {
+  background: #f2e5c9;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.period-object-item h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: var(--navy);
+}
+
+.period-object-meta {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.period-object-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0.75rem 0;
+  color: var(--text);
+}
+
+.period-object-item .btn-secondary {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 992px) {
+  .stats-layout {
+    grid-template-columns: 1fr;
+  }
+}
+

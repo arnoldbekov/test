@@ -1,0 +1,140 @@
+@import url("../../common/_vars.css");
+@import url("../../common/_animations.css");
+
+/* Favorites Section Block */
+.favorites-section {
+  padding: 4rem 0 3rem;
+}
+
+.favorites-section__tabs {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  border-bottom: 2px solid var(--border-soft);
+}
+
+.favorites-section__tab-btn {
+  padding: 0.85rem 2rem;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.98rem;
+  color: var(--muted);
+  margin-bottom: -2px;
+}
+
+.favorites-section__tab-btn--active {
+  color: var(--navy);
+  border-bottom-color: var(--navy);
+}
+
+.favorites-section__content {
+  margin-top: 1.5rem;
+}
+
+.favorites-section__tab-content {
+  display: none;
+}
+
+.favorites-section__tab-content--active {
+  display: block;
+}
+
+.favorites-section__empty-message {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+/* Legacy support for backward compatibility */
+.favorites-tabs {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  border-bottom: 2px solid var(--border-soft);
+}
+
+.favorites-tabs .tab-btn {
+  padding: 0.85rem 2rem;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.98rem;
+  color: var(--muted);
+  margin-bottom: -2px;
+}
+
+.favorites-tabs .tab-btn.active {
+  color: var(--navy);
+  border-bottom-color: var(--navy);
+}
+
+.favorites-content {
+  margin-top: 1.5rem;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .favorites-section {
+    padding: 3rem 0 2rem;
+  }
+  .favorites-section__tabs,
+  .favorites-tabs {
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .favorites-section__tab-btn,
+  .favorites-tabs .tab-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .favorites-section__empty-message,
+  .empty-message {
+    padding: 2rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .favorites-section {
+    padding: 2.5rem 0 1.5rem;
+  }
+  .favorites-section__tabs,
+  .favorites-tabs {
+    gap: 0.3rem;
+  }
+  .favorites-section__tab-btn,
+  .favorites-tabs .tab-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
+  .favorites-section__empty-message,
+  .empty-message {
+    padding: 1.5rem 1rem;
+    font-size: 0.95rem;
+  }
+}
+

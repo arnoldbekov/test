@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Маршруты — HistoryTravel</title>
+  <meta name="description" content="HistoryTravel — тематические и личные маршруты по историческим объектам Приднестровья.">
+  <link rel="stylesheet" href="../styles/style.css?v=11">
+  <link rel="icon" href="../assets/img/logo.png" type="image/png" sizes="32x32">
+  <link rel="shortcut icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../js/core/map-renderer.js"></script>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-inner header__inner">
+    <a href="../index.html" class="logo-link header__logo-link"><img src="../assets/img/logo.png" alt="HistoryTravel" class="logo-img header__logo-img"></a>
+    <nav class="nav header__nav" aria-label="Навигация по разделам">
+      <a href="../index.html#map" class="header__nav-link">Карта</a>
+      <a href="../index.html#timeline" class="header__nav-link">Эпохи</a>
+      <a href="routes.html" class="header__nav-link">Маршруты</a>
+      <a href="gallery.html" class="header__nav-link">Галерея</a>
+      <a href="favorites.html" class="header__nav-link">Избранное</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="routes-section routes" aria-labelledby="routes-title">
+    <div class="container">
+      <h2 id="routes-title">Тематические и личные маршруты</h2>
+      <p class="section-lead">
+        На этой странице собраны готовые маршруты по культурному и историческому наследию Приднестровья,
+        а также ваши личные маршруты, сохранённые на устройстве.
+      </p>
+
+      <div class="routes-layout routes__layout">
+        <div class="premade routes__premade" aria-label="Готовые маршруты">
+          <h3>Готовые маршруты</h3>
+          <button class="route-btn routes__btn" data-route="architecture">Архитектурное наследие</button>
+          <button class="route-btn routes__btn" data-route="military">Военно-исторический</button>
+          <button class="route-btn routes__btn" data-route="religious">Религиозное наследие</button>
+          <button class="route-btn routes__btn" data-route="urban">Современный городской облик</button>
+          <p class="route-note">
+            При выборе маршрута ниже появится список объектов и примерное время прохождения.
+            Карта откроется на этой странице, и объекты маршрута будут подсвечены.
+          </p>
+          <div class="route-summary routes__summary" id="routeSummary" aria-live="polite"></div>
+        </div>
+
+        <div class="custom-routes routes__custom">
+          <h3>Мои маршруты</h3>
+          <button id="createCustom" class="btn-primary" style="margin-bottom: 1.5rem;">Создать свой маршрут</button>
+          <div id="savedRoutesList" aria-label="Сохранённые маршруты"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="map" class="map-section map" aria-labelledby="map-title-wrapper">
+    <div class="container">
+      <div class="map-header map__header">
+        <div>
+          <h2 id="map-title-wrapper">Интерактивная карта региона</h2>
+          <p>Выбранный маршрут подсвечен на карте. Наведите курсор или нажмите на отметку, чтобы узнать больше об объекте.</p>
+        </div>
+        <button type="button" id="hideMapBtn" class="btn-secondary" style="margin-top: 0;">Скрыть карту</button>
+      </div>
+      <div class="map-and-list">
+        <div class="map-wrapper map__wrapper" role="region" aria-label="Карта культурных объектов">
+          <div class="map-tooltip map__tooltip" id="mapTooltipRoutes" role="tooltip" aria-hidden="true">
+            <div class="tooltip-content">
+              <img class="tooltip-image" src="" alt="" loading="lazy">
+              <div class="tooltip-text">
+                <h4 class="tooltip-title"></h4>
+                <p class="tooltip-description"></p>
+              </div>
+            </div>
+          </div>
+          <div class="map-controls map__controls" aria-label="Управление масштабом карты">
+            <button type="button" id="zoomInBtnRoutes" class="map-zoom-btn map__zoom-btn" aria-label="Приблизить карту">+</button>
+            <button type="button" id="zoomOutBtnRoutes" class="map-zoom-btn map__zoom-btn" aria-label="Отдалить карту">−</button>
+            <button type="button" id="zoomResetBtnRoutes" class="map-zoom-reset map__zoom-reset" aria-label="Показать карту целиком">Сброс</button>
+          </div>
+          <svg id="pmrMapRoutes" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
+            <g id="mapContentRoutes">
+              <image
+                href="../assets/img/Pridnestrovie_Locator_map.svg"
+                x="0"
+                y="0"
+                width="1000"
+                height="700"
+                preserveAspectRatio="xMidYMid meet"
+              />
+            </g>
+          </svg>
+        </div>
+
+        <section class="objects-grid objects__grid" id="objectsGridRoutes" aria-label="Список исторических объектов">
+        </section>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="objectModal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-labelledby="objTitle" aria-modal="true">
+    <button class="close" type="button" aria-label="Закрыть окно с описанием объекта">×</button>
+    <h2 id="objTitle"></h2>
+    <div id="objContent"></div>
+  </div>
+</div>
+
+  <div class="modal" id="compareModal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
+      <button class="close" type="button" aria-label="Закрыть окно сравнения">×</button>
+      <div class="modal-nav">
+        <button id="comparePrev" type="button" aria-label="Предыдущая карточка">‹</button>
+        <button id="compareNext" type="button" aria-label="Следующая карточка">›</button>
+      </div>
+      <h3 id="compareTitle">Тогда и сейчас</h3>
+      <div class="compare" id="compareContainer"></div>
+    </div>
+  </div>
+
+<div class="modal" id="routeModal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="routeModalTitle">
+    <button class="close" type="button" aria-label="Закрыть окно планирования маршрута">×</button>
+    <h3 id="routeModalTitle">Создать свой маршрут</h3>
+    <p class="route-modal-hint">Отметьте объекты, которые хотите включить в маршрут, затем введите название и сохраните.</p>
+    <div id="routeChecklist" class="route-checklist" aria-label="Список объектов для построения маршрута"></div>
+    <div class="route-start-point">
+      <label class="route-name-label">Начальная точка маршрута</label>
+      <button id="selectStartPoint" type="button" class="btn-secondary">Указать на карте</button>
+      <span id="startPointDisplay" class="start-point-display"></span>
+    </div>
+    <label class="route-name-label" for="routeNameInput">Название маршрута</label>
+    <input id="routeNameInput" type="text" placeholder="Например, «Выходные в историческом центре»">
+    <button id="saveRoute" class="btn-primary">Сохранить маршрут</button>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container footer-inner footer__inner">
+    <div class="footer-top footer__top">
+      <div class="footer-logo footer__logo">
+        <img src="../assets/img/logo.png" alt="HistoryTravel" class="footer-logo-img footer__logo-img">
+        <div class="footer-logo-text footer__logo-text">
+          <div class="footer-logo-title footer__logo-title">HistoryTravel</div>
+          <div class="footer-logo-subtitle footer__logo-subtitle">Карта культурного наследия</div>
+        </div>
+      </div>
+      <div class="footer-nav-columns footer__nav-columns">
+        <div class="footer-nav-col footer__nav-col">
+          <h4>Разделы сайта</h4>
+          <nav class="footer-links footer__links">
+            <a href="../index.html#map" class="footer__link">Карта</a>
+            <a href="../index.html#timeline" class="footer__link">Эпохи</a>
+            <a href="routes.html" class="footer__link">Маршруты</a>
+            <a href="gallery.html" class="footer__link">Галерея</a>
+          </nav>
+        </div>
+        <div class="footer-nav-col footer__nav-col">
+          <h4>Дополнительно</h4>
+          <nav class="footer-links footer__links">
+            <a href="favorites.html" class="footer__link">Избранное</a>
+            <a href="../index.html#map" class="footer__link">О проекте</a>
+            <a href="../index.html#timeline" class="footer__link">Исторические периоды</a>
+          </nav>
+        </div>
+      </div>
+      <div class="footer-section footer__section footer-section--contacts">
+        <h4>Контакты</h4>
+        <div class="footer-contact footer__contact">
+          <p class="footer-contact-item footer__contact-item">Email: <a href="mailto:nikita.stamoi@gmail.com" class="footer__link">nikita.stamoi@gmail.com</a></p>
+          <p class="footer__text">Danich Nikita</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-social-section footer__social-section">
+      <h3>Мы в социальных сетях</h3>
+      <div class="footer-social footer__social">
+        <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" aria-label="Telegram" class="footer__social-link">✈</a>
+        <a href="https://vk.com" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте" class="footer__social-link">VK</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="footer__social-link">📷</a>
+      </div>
+    </div>
+    <div class="footer-bottom footer__bottom">
+      <p>&copy; 2025 HistoryTravel - Карта культурного и исторического наследия региона.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="../js/core/map-renderer.js"></script>
+<script src="../js/core/script.js"></script>
+<script type="module" src="../js/core/main.js"></script>
+</body>
+</html>
+

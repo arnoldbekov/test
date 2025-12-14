@@ -1,0 +1,48 @@
+@import url("../../common/_vars.css");
+
+/* Form Input Block */
+.form-input {
+  padding: 0.75rem 1.2rem;
+  border-radius: 999px;
+  border: 2px solid var(--border-soft);
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.98rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  background: #ffffff;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.15);
+}
+
+/* Legacy support for input types */
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="tel"],
+input[type="password"] {
+  padding: 0.75rem 1.2rem;
+  border-radius: 999px;
+  border: 2px solid var(--border-soft);
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.98rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  background: #ffffff;
+}
+
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.15);
+}
+

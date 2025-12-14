@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Избранное — HistoryTravel</title>
+  <meta name="description" content="HistoryTravel — ваши избранные объекты культурного наследия и маршруты.">
+  <link rel="stylesheet" href="../styles/style.css?v=11">
+  <link rel="icon" href="../assets/img/logo.png" type="image/png" sizes="32x32">
+  <link rel="shortcut icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-inner header__inner">
+    <a href="../index.html" class="logo-link header__logo-link"><img src="../assets/img/logo.png" alt="HistoryTravel" class="logo-img header__logo-img"></a>
+    <nav class="nav header__nav" aria-label="Основная навигация сайта">
+      <a href="../index.html#map" class="header__nav-link">Карта</a>
+      <a href="../index.html#timeline" class="header__nav-link">Эпохи</a>
+      <a href="routes.html" class="header__nav-link">Маршруты</a>
+      <a href="gallery.html" class="header__nav-link">Галерея</a>
+      <a href="favorites.html" class="header__nav-link">Избранное</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="favorites-section favorites" aria-labelledby="favorites-title" data-aos="fade-up">
+    <div class="container">
+      <h2 id="favorites-title">Избранные объекты и маршруты</h2>
+      <p class="section-lead">Здесь собраны ваши избранные объекты культурного наследия и маршруты. Вы можете удалить их из избранного, нажав на иконку сердца.</p>
+
+      <div class="favorites-tabs favorites__tabs" role="tablist" aria-label="Вкладки избранного">
+        <button class="tab-btn favorites__tab-btn active" data-tab="places" role="tab" aria-selected="true">Объекты</button>
+        <button class="tab-btn favorites__tab-btn" data-tab="routes" role="tab" aria-selected="false">Маршруты</button>
+      </div>
+
+      <div class="favorites-content favorites__content">
+        <div id="favoritesPlaces" class="tab-content favorites__tab-content active" role="tabpanel" aria-labelledby="tab-places">
+          <div class="objects-grid objects__grid" id="favoritesPlacesGrid">
+          </div>
+          <p class="empty-message" id="emptyPlaces" style="display: none;">У вас пока нет избранных объектов. Добавьте объекты в избранное, нажав на иконку сердца на карточке объекта.</p>
+        </div>
+
+        <div id="favoritesRoutes" class="tab-content favorites__tab-content" role="tabpanel" aria-labelledby="tab-routes" style="display: none;">
+          <div id="favoritesRoutesList">
+          </div>
+          <p class="empty-message" id="emptyRoutes" style="display: none;">У вас пока нет избранных маршрутов. Добавьте маршруты в избранное, нажав на иконку сердца рядом с маршрутом.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="objectModal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-labelledby="objTitle" aria-modal="true">
+    <button class="close" type="button" aria-label="Закрыть окно с описанием объекта">×</button>
+    <h2 id="objTitle"></h2>
+    <div id="objContent"></div>
+  </div>
+</div>
+
+<div class="modal" id="compareModal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
+    <button class="close" type="button" aria-label="Закрыть окно сравнения">×</button>
+    <h3 id="compareTitle">Тогда и сейчас</h3>
+    <div class="compare" id="compareContainer"></div>
+  </div>
+</div>
+
+<div class="modal" id="routeModal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="routeModalTitle">
+    <button class="close" type="button" aria-label="Закрыть окно планирования маршрута">×</button>
+    <h3 id="routeModalTitle">Создать свой маршрут</h3>
+    <p class="route-modal-hint">Отметьте объекты, которые хотите включить в маршрут, затем введите название и сохраните.</p>
+    <div id="routeChecklist" class="route-checklist" aria-label="Список объектов для построения маршрута"></div>
+    <div class="route-start-point">
+      <label class="route-name-label">Начальная точка маршрута</label>
+      <button id="selectStartPoint" type="button" class="btn-secondary">Указать на карте</button>
+      <span id="startPointDisplay" class="start-point-display"></span>
+    </div>
+    <label class="route-name-label" for="routeNameInput">Название маршрута</label>
+    <input id="routeNameInput" type="text" placeholder="Например, «Выходные в историческом центре»">
+    <button id="saveRoute" class="btn-primary">Сохранить маршрут</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="../js/core/map-renderer.js"></script>
+<script src="../js/core/script.js"></script>
+<script type="module" src="../js/core/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    if (window.AOS) {
+      AOS.init({ duration: 800, once: true, offset: 100 });
+    }
+
+    function loadPlacesData() {
+      if (typeof axios !== 'undefined') {
+        axios.get('../data/sites.json')
+          .then(response => {
+            const data = response.data;
+            if (Array.isArray(data) && data.length > 0) {
+              if (typeof places !== 'undefined') {
+                places = data;
+              } else {
+                window.places = data;
+              }
+              initFavoritesPage();
+            } else {
+              console.error('Данные в sites.json пусты или некорректны');
+              alert('Данные в файле sites.json некорректны.');
+            }
+          })
+          .catch(err => {
+            console.warn('Axios не смог загрузить данные, пробуем через fetch:', err);
+            loadPlacesDataFallback();
+          });
+      } else {
+        loadPlacesDataFallback();
+      }
+    }
+
+    function loadPlacesDataFallback() {
+      fetch('../data/sites.json')
+        .then(resp => {
+          if (!resp.ok) {
+            throw new Error(`HTTP error! status: ${resp.status}`);
+          }
+          return resp.json();
+        })
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            if (typeof places !== 'undefined') {
+              places = data;
+            } else {
+              window.places = data;
+            }
+            initFavoritesPage();
+          } else {
+            console.error('Данные в sites.json пусты или некорректны');
+            alert('Данные в файле sites.json некорректны.');
+          }
+        })
+        .catch(err => {
+          console.error('Ошибка при загрузке data/sites.json:', err);
+          const errorMsg = err.message || 'Неизвестная ошибка';
+          const isCorsError = errorMsg.includes('CORS') || errorMsg.includes('Failed to fetch');
+          const is404Error = errorMsg.includes('404') || errorMsg.includes('status: 404');
+          
+          let userMessage = 'Не удалось загрузить данные о наследиях. ';
+          if (isCorsError || window.location.protocol === 'file:') {
+            userMessage += 'Для корректной работы сайта необходимо запустить его через локальный сервер (например, Live Server в VS Code или python -m http.server).';
+          } else if (is404Error) {
+            userMessage += 'Файл data/sites.json не найден. Проверьте, что файл существует.';
+          } else {
+            userMessage += `Ошибка: ${errorMsg}. Проверьте, что файл data/sites.json существует и доступен.`;
+          }
+          alert(userMessage);
+        });
+    }
+
+    if (typeof places === 'undefined') {
+      window.places = [];
+    }
+    
+    loadPlacesData();
+  } catch (error) {
+    console.error('Ошибка при инициализации страницы избранного:', error);
+    alert('Произошла ошибка при загрузке страницы. Проверьте консоль браузера для подробностей.');
+  }
+});
+
+function initFavoritesPage() {
+  if (typeof setupFavoritesTabs === 'function') {
+    setupFavoritesTabs();
+  }
+  renderFavoritesPlaces();
+  renderFavoritesRoutes();
+  if (typeof setupModals === 'function') {
+    setupModals();
+  }
+  
+  const saveRouteBtn = document.getElementById('saveRoute');
+  if (saveRouteBtn && typeof saveCustomRoute === 'function') {
+    saveRouteBtn.addEventListener('click', saveCustomRoute);
+  }
+}
+
+function setupFavoritesTabs() {
+  const tabs = document.querySelectorAll('.favorites__tab-btn');
+  const contents = document.querySelectorAll('.favorites__tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetTab = tab.dataset.tab;
+
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      contents.forEach(content => {
+        content.style.display = 'none';
+      });
+      const targetContent = document.getElementById(`favorites${targetTab.charAt(0).toUpperCase() + targetTab.slice(1)}`);
+      if (targetContent) {
+        targetContent.style.display = 'block';
+      }
+    });
+  });
+}
+
+function renderFavoritesPlaces() {
+  const grid = document.getElementById('favoritesPlacesGrid');
+  const emptyMsg = document.getElementById('emptyPlaces');
+  if (!grid) return;
+
+  const placesData = typeof places !== 'undefined' ? places : (window.places || []);
+  if (!Array.isArray(placesData) || placesData.length === 0) {
+    console.error('Данные о местах не загружены');
+    grid.style.display = 'none';
+    if (emptyMsg) emptyMsg.style.display = 'block';
+    return;
+  }
+
+  if (typeof getFavorites !== 'function') {
+    console.error('Функция getFavorites не найдена');
+    return;
+  }
+
+  const favorites = getFavorites();
+  const favoritePlaces = placesData.filter(p => favorites.places.includes(p.id));
+
+  if (favoritePlaces.length === 0) {
+    grid.style.display = 'none';
+    emptyMsg.style.display = 'block';
+    return;
+  }
+
+  grid.style.display = 'grid';
+  emptyMsg.style.display = 'none';
+
+  const getPeriodNameFunc = typeof getPeriodName === 'function' ? getPeriodName : (p) => p || '';
+  const getTypeNameFunc = typeof getTypeName === 'function' ? getTypeName : (t) => t || '';
+
+  const normalizeImagePathFunc = typeof normalizeImagePath === 'function' ? normalizeImagePath : (path) => {
+    if (!path) return '';
+    if (path.startsWith('http://') || path.startsWith('https://')) return path;
+    const isInPages = window.location.pathname.includes('/pages/');
+    if (path.startsWith('image/')) {
+      return isInPages ? `../${path}` : path;
+    }
+    return isInPages ? `../${path}` : path;
+  };
+  
+  grid.innerHTML = favoritePlaces.map(place => {
+    const hasImage = place.images && place.images.now && place.images.now.trim() !== '';
+    return `
+      <article class="object-card" itemscope itemtype="https://schema.org/TouristAttraction" data-aos="fade-up" data-aos-duration="600">
+        ${hasImage ? `
+        <div class="object-card-image">
+          <img src="${normalizeImagePathFunc(place.images.now)}" alt="${place.name || ''}" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        ` : ''}
+        <div class="object-card-header">
+          <h3 itemprop="name">${place.name || ''}</h3>
+          <button class="favorite-btn active" data-id="${place.id}" data-type="place" aria-label="Убрать из избранного" title="Убрать из избранного">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+        </div>
+        <p class="object-meta">
+          <span itemprop="temporalCoverage">${getPeriodNameFunc(place.period)}</span>
+          <span itemprop="category">${getTypeNameFunc(place.type)}</span>
+        </p>
+        <p itemprop="description">${place.short || ''}</p>
+        ${place.address ? `<meta itemprop="address" content="${place.address}">` : ''}
+        <button class="btn-secondary btn-details" data-id="${place.id}">Подробнее →</button>
+      </article>
+    `;
+  }).join('');
+
+  grid.querySelectorAll('.btn-details').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = Number(btn.dataset.id);
+      const placesData = typeof places !== 'undefined' ? places : (window.places || []);
+      const place = placesData.find(p => p.id === id);
+      if (place && typeof openObjectModal === 'function') {
+        openObjectModal(place);
+      }
+    });
+  });
+
+  grid.querySelectorAll('.favorite-btn[data-type="place"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = Number(btn.dataset.id);
+      if (typeof togglePlaceFavorite === 'function') {
+        togglePlaceFavorite(id);
+        renderFavoritesPlaces();
+      }
+    });
+  });
+}
+
+function renderFavoritesRoutes() {
+  const container = document.getElementById('favoritesRoutesList');
+  const emptyMsg = document.getElementById('emptyRoutes');
+  if (!container) return;
+
+  if (typeof getFavorites !== 'function') {
+    console.error('Функция getFavorites не найдена');
+    return;
+  }
+
+  const favorites = getFavorites();
+  const allRoutes = JSON.parse(localStorage.getItem('heritage_routes_v1') || '[]');
+  const favoriteRoutes = allRoutes.filter(r => favorites.routes.includes(r.id));
+
+  if (favoriteRoutes.length === 0) {
+    container.style.display = 'none';
+    emptyMsg.style.display = 'block';
+    return;
+  }
+
+  container.style.display = 'block';
+  emptyMsg.style.display = 'none';
+
+  const estimateDurationFunc = typeof estimateDuration === 'function' ? estimateDuration : (count) => (count * 0.5).toFixed(1);
+
+  container.innerHTML = favoriteRoutes.map(route => {
+    const count = route.placeIds?.length || 0;
+    const duration = route.durationHours || estimateDurationFunc(count);
+    return `
+      <article class="saved-route">
+        <div>
+          <h4>${route.name}</h4>
+          <p>${count} объектов, примерно ${duration} ч.</p>
+        </div>
+        <div class="saved-route-actions">
+          <button class="favorite-btn active" type="button" data-id="${route.id}" data-type="route" aria-label="Убрать из избранного" title="Убрать из избранного">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+          <button type="button" data-id="${route.id}" data-action="show">Показать на карте</button>
+          <button type="button" data-id="${route.id}" data-action="delete">Удалить</button>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  container.querySelectorAll('button[data-action]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = Number(btn.dataset.id);
+      const action = btn.dataset.action;
+      const route = favoriteRoutes.find(r => r.id === id);
+
+      if (action === 'show' && route) {
+        localStorage.setItem('show_route_on_load', JSON.stringify({ 
+          routeId: id, 
+          routeName: route.name, 
+          placeIds: route.placeIds || [],
+          startPointId: route.startPointId || null,
+          startPointCoords: route.startPointCoords || null
+        }));
+        window.location.href = '../index.html#map';
+      } else if (action === 'delete' && route) {
+        const allRoutes = JSON.parse(localStorage.getItem('heritage_routes_v1') || '[]');
+        const updated = allRoutes.filter(r => r.id !== id);
+        localStorage.setItem('heritage_routes_v1', JSON.stringify(updated));
+        renderFavoritesRoutes();
+      }
+    });
+  });
+
+  container.querySelectorAll('.favorite-btn[data-type="route"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = Number(btn.dataset.id);
+      if (typeof toggleRouteFavorite === 'function') {
+        toggleRouteFavorite(id);
+        renderFavoritesRoutes();
+      }
+    });
+  });
+}
+</script>
+
+<footer class="footer">
+  <div class="container footer-inner footer__inner">
+    <div class="footer-top footer__top">
+      <div class="footer-logo footer__logo">
+        <img src="../assets/img/logo.png" alt="HistoryTravel" class="footer-logo-img footer__logo-img">
+        <div class="footer-logo-text footer__logo-text">
+          <div class="footer-logo-title footer__logo-title">HistoryTravel</div>
+          <div class="footer-logo-subtitle footer__logo-subtitle">Карта культурного наследия</div>
+        </div>
+      </div>
+      <div class="footer-nav-columns footer__nav-columns">
+        <div class="footer-nav-col footer__nav-col">
+          <h4>Разделы сайта</h4>
+          <nav class="footer-links footer__links">
+            <a href="../index.html#map" class="footer__link">Карта</a>
+            <a href="../index.html#timeline" class="footer__link">Эпохи</a>
+            <a href="routes.html" class="footer__link">Маршруты</a>
+            <a href="gallery.html" class="footer__link">Галерея</a>
+          </nav>
+        </div>
+        <div class="footer-nav-col footer__nav-col">
+          <h4>Дополнительно</h4>
+          <nav class="footer-links footer__links">
+            <a href="favorites.html" class="footer__link">Избранное</a>
+            <a href="../index.html#map" class="footer__link">О проекте</a>
+            <a href="../index.html#timeline" class="footer__link">Исторические периоды</a>
+          </nav>
+        </div>
+      </div>
+      <div class="footer-section footer__section footer-section--contacts">
+        <h4>Контакты</h4>
+        <div class="footer-contact footer__contact">
+          <p class="footer-contact-item footer__contact-item">Email: <a href="mailto:nikita.stamoi@gmail.com" class="footer__link">nikita.stamoi@gmail.com</a></p>
+          <p class="footer__text">Danich Nikita</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-social-section footer__social-section">
+      <h3>Мы в социальных сетях</h3>
+      <div class="footer-social footer__social">
+        <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" aria-label="Telegram" class="footer__social-link">✈</a>
+        <a href="https://vk.com" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте" class="footer__social-link">VK</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="footer__social-link">📷</a>
+      </div>
+    </div>
+    <div class="footer-bottom footer__bottom">
+      <p>&copy; 2025 HistoryTravel - Карта культурного и исторического наследия региона.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
+
