@@ -195,7 +195,8 @@
 
 .object-card__description {
   color: var(--muted);
-  margin: 0.4rem 0 0.7rem 0;
+  margin: 0;
+  padding: 0 1.25rem 1.25rem 1.25rem;
   flex: 1;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -205,11 +206,6 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-height: 3.1em;
-  max-height: 3.1em;
-  word-break: break-word;
-  hyphens: auto;
-  overflow-wrap: break-word;
 }
 
 .object-card__actions {
