@@ -223,11 +223,15 @@
   gap: 0.75rem;
   align-items: center;
   margin: 0.5rem 0 1rem 0;
+  flex-wrap: wrap;
 }
 
 #routeModal .start-point-display {
   color: var(--primary);
   font-weight: 600;
+  word-break: break-word;
+  flex: 1;
+  min-width: 0;
 }
 
 /* Legacy support for backward compatibility */
