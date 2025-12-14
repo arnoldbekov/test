@@ -163,31 +163,34 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  font-size: 0.85rem;
-  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0 1.25rem;
   align-items: flex-start;
 }
 
 .object-card__meta-item {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.4rem 0.8rem;
-  background: #f8f3e6;
-  border-radius: 8px;
-  color: var(--primary);
-  font-weight: 600;
+  display: inline-block;
+  padding: 0.25rem 0;
+  background: transparent;
+  border-radius: 0;
+  color: var(--muted);
+  font-weight: 500;
   white-space: nowrap;
-  border: 1px solid var(--border-soft);
-  height: 28px;
+  border: none;
+  height: auto;
   box-sizing: border-box;
-  line-height: 1;
+  line-height: 1.4;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .object-card__meta-item:hover {
-  background: #f2e5c9;
+  background: transparent;
+  color: var(--primary);
 }
 
 .object-card__description {
