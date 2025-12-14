@@ -436,6 +436,17 @@
     display: flex;
     flex-direction: column;
   }
+  .map-and-list {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .map-and-list .map-wrapper {
+    height: 400px;
+  }
+  .map-and-list .objects-grid {
+    max-height: none;
+    overflow-y: visible;
+  }
   .routes-section__premade,
   .premade,
   .routes__premade {
@@ -480,6 +491,17 @@
     gap: 1.25rem;
     display: flex;
     flex-direction: column;
+  }
+  .map-and-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .map-and-list .map-wrapper {
+    height: 350px;
+  }
+  .map-and-list .objects-grid {
+    max-height: none;
+    overflow-y: visible;
   }
   .routes-section__premade,
   .premade,

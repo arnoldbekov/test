@@ -94,27 +94,7 @@ function setupMapInteractions() {
     applyTransform();
   });
 
-  map.addEventListener('click', evt => {
-    if (appState.isSelectingStartPoint) return;
-    const zone = evt.target.closest('.map-zone');
-    if (!zone) return;
-    const place = appState.places.find(p => p.id === Number(zone.dataset.id));
-    if (place && typeof window.openObjectModal === 'function') {
-      window.openObjectModal(place);
-    }
-  });
-
-  map.addEventListener('keydown', evt => {
-    if (evt.key === 'Enter' || evt.key === ' ') {
-      const zone = evt.target.closest('.map-zone');
-      if (!zone) return;
-      evt.preventDefault();
-      const place = appState.places.find(p => p.id === Number(zone.dataset.id));
-      if (place && typeof window.openObjectModal === 'function') {
-        window.openObjectModal(place);
-      }
-    }
-  });
+  // Click handler removed - now handled in setupMapTooltips
 
   setupMapTooltips(map, 'mapTooltip');
 }
@@ -125,13 +105,17 @@ function setupMapTooltips(mapElement, tooltipId) {
   const tooltipTitle = tooltip.querySelector('.tooltip-title');
   const tooltipDescription = tooltip.querySelector('.tooltip-description');
   const tooltipImage = tooltip.querySelector('.tooltip-image');
-  const mapWrapper = mapElement.closest('.map-wrapper') || mapElement.closest('.fullscreen-map-wrapper');
+  const tooltipDetailsBtn = tooltip.querySelector('.tooltip-details-btn');
+  const mapWrapper = mapElement.closest('.map-wrapper') || mapElement.closest('.fullscreen-map-wrapper') || mapElement.closest('.map-modal-wrapper');
   if (!tooltipTitle || !tooltipDescription || !tooltipImage || !mapWrapper) return;
-  let currentZone = null, hideTimeout = null, showTimeout = null;
+  let currentZone = null, hideTimeout = null, showTimeout = null, currentPlace = null;
 
-  function showTooltip(zone) {
-    const place = appState.places.find(p => p.id === Number(zone.dataset.id));
+  function showTooltip(zone, place) {
+    if (!place) {
+      place = appState.places.find(p => p.id === Number(zone.dataset.id));
+    }
     if (!place) return;
+    currentPlace = place;
     tooltipTitle.textContent = place.name;
     const descriptionText = place.short || '';
     tooltipDescription.textContent = descriptionText.length > 50 ? descriptionText.substring(0, 50) + '...' : descriptionText;
@@ -150,7 +134,7 @@ function setupMapTooltips(mapElement, tooltipId) {
     const relativeX = circleRect.left + circleRect.width / 2 - wrapperRect.left;
     const relativeY = circleRect.top + circleRect.height / 2 - wrapperRect.top;
     const tooltipWidth = 280;
-    const tooltipHeight = tooltipImage.style.display === 'none' ? 80 : 120;
+    const tooltipHeight = tooltipImage.style.display === 'none' ? 140 : 180;
     let left = relativeX + 25, top = relativeY - tooltipHeight / 2;
     if (left + tooltipWidth > wrapperRect.width) left = relativeX - tooltipWidth - 25;
     if (left < 0) left = 10;
@@ -159,6 +143,7 @@ function setupMapTooltips(mapElement, tooltipId) {
     tooltip.style.left = `${left}px`;
     tooltip.style.top = `${top}px`;
     tooltip.setAttribute('aria-hidden', 'false');
+    tooltip.style.pointerEvents = 'auto';
     currentZone = zone;
     if (hideTimeout) {
       clearTimeout(hideTimeout);
@@ -168,7 +153,20 @@ function setupMapTooltips(mapElement, tooltipId) {
 
   function hideTooltip() {
     tooltip.setAttribute('aria-hidden', 'true');
+    tooltip.style.pointerEvents = 'none';
     currentZone = null;
+    currentPlace = null;
+  }
+
+  if (tooltipDetailsBtn) {
+    tooltipDetailsBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (currentPlace && typeof window.openObjectModal === 'function') {
+        hideTooltip();
+        window.openObjectModal(currentPlace);
+      }
+    });
   }
 
   mapElement.addEventListener('mouseover', (evt) => {
@@ -199,37 +197,19 @@ function setupMapTooltips(mapElement, tooltipId) {
     }
   }, true);
 
-  mapElement.addEventListener('touchstart', (evt) => {
-    const zone = evt.target.closest('.map-zone');
-    if (!zone) return;
-    evt.preventDefault();
-    if (hideTimeout) {
-      clearTimeout(hideTimeout);
-      hideTimeout = null;
-    }
-    if (showTimeout) clearTimeout(showTimeout);
-    showTooltip(zone);
-  }, true);
-
   tooltip.addEventListener('mouseleave', () => {
     hideTimeout = setTimeout(() => hideTooltip(), 100);
   });
 
-  document.addEventListener('touchstart', (evt) => {
-    if (currentZone && !tooltip.contains(evt.target) && !evt.target.closest('.map-zone')) {
-      hideTooltip();
+  mapElement.addEventListener('click', (evt) => {
+    if (appState.isSelectingStartPoint) return;
+    const zone = evt.target.closest('.map-zone');
+    if (!zone) return;
+    const place = appState.places.find(p => p.id === Number(zone.dataset.id));
+    if (place) {
+      showTooltip(zone, place);
     }
   });
-
-  if (tooltipBtn) {
-    tooltipBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (currentPlace && typeof window.openObjectModal === 'function') {
-        window.openObjectModal(currentPlace);
-        hideTooltip();
-      }
-    });
-  }
 }
 
 function setupMapInteractionsRoutes() {
@@ -329,16 +309,7 @@ function setupMapInteractionsRoutes() {
     applyTransform();
   });
 
-  map.addEventListener('click', evt => {
-    if (appState.isSelectingStartPoint) return;
-    const zone = evt.target.closest('.map-zone');
-    if (!zone) return;
-    const place = appState.places.find(p => p.id === Number(zone.dataset.id));
-    if (place && typeof window.openObjectModal === 'function') {
-      window.openObjectModal(place);
-    }
-  });
-
+  // Click handler removed - now handled in setupMapTooltips
   setupMapTooltips(map, 'mapTooltipRoutes');
 }
 
@@ -593,16 +564,7 @@ function setupMapInteractionsForModal() {
     isPanning = false;
   });
 
-  // Add click handler for zones
-  map.addEventListener('click', evt => {
-    if (isPanning) return;
-    const zone = evt.target.closest('.map-zone');
-    if (!zone) return;
-    const place = appState.places.find(p => p.id === Number(zone.dataset.id));
-    if (place && typeof window.openObjectModal === 'function') {
-      window.openObjectModal(place);
-    }
-  });
+  // Click handler removed - now handled in setupMapTooltipsForModal
 
   map.addEventListener('keydown', evt => {
     if (evt.key === 'Enter' || evt.key === ' ') {
@@ -625,52 +587,122 @@ function setupMapTooltipsForModal() {
   const tooltipTitle = tooltip.querySelector('.tooltip-title');
   const tooltipDescription = tooltip.querySelector('.tooltip-description');
   const tooltipImage = tooltip.querySelector('.tooltip-image');
-  const tooltipBtn = tooltip.querySelector('.tooltip-btn');
-  const zones = map.querySelectorAll('.map-zone');
-  let currentPlace = null;
+  const tooltipDetailsBtn = tooltip.querySelector('.tooltip-details-btn');
+  const mapWrapper = map.closest('.map-modal-wrapper');
+  if (!tooltipTitle || !tooltipDescription || !tooltipImage || !mapWrapper) return;
+  let currentZone = null, hideTimeout = null, showTimeout = null, currentPlace = null;
 
-  function showTooltip(zone) {
-    const place = appState.places.find(p => p.id === Number(zone.dataset.id));
+  function showTooltip(zone, place) {
+    if (!place) {
+      place = appState.places.find(p => p.id === Number(zone.dataset.id));
+    }
     if (!place) return;
     currentPlace = place;
     tooltipTitle.textContent = place.name;
     const descriptionText = place.short || '';
     tooltipDescription.textContent = descriptionText.length > 50 ? descriptionText.substring(0, 50) + '...' : descriptionText;
-    if (tooltipBtn) {
-      tooltipBtn.dataset.tooltipId = place.id;
-    }
     if (place.images && place.images.now) {
       tooltipImage.src = normalizeImagePath(place.images.now);
       tooltipImage.alt = place.name;
       tooltipImage.style.display = 'block';
+      tooltipImage.onerror = () => { tooltipImage.style.display = 'none'; };
     } else {
       tooltipImage.style.display = 'none';
     }
+    const wrapperRect = mapWrapper.getBoundingClientRect();
+    const zoneCircle = zone.querySelector('circle.map-pin') || zone.querySelector('circle');
+    if (!zoneCircle) return;
+    const circleRect = zoneCircle.getBoundingClientRect();
+    const relativeX = circleRect.left + circleRect.width / 2 - wrapperRect.left;
+    const relativeY = circleRect.top + circleRect.height / 2 - wrapperRect.top;
+    const tooltipWidth = 280;
+    const tooltipHeight = tooltipImage.style.display === 'none' ? 140 : 180;
+    let left = relativeX + 25, top = relativeY - tooltipHeight / 2;
+    if (left + tooltipWidth > wrapperRect.width) left = relativeX - tooltipWidth - 25;
+    if (left < 0) left = 10;
+    if (top < 0) top = 10;
+    if (top + tooltipHeight > wrapperRect.height) top = wrapperRect.height - tooltipHeight - 10;
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
     tooltip.setAttribute('aria-hidden', 'false');
+    tooltip.style.pointerEvents = 'auto';
+    currentZone = zone;
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
   }
 
   function hideTooltip() {
     tooltip.setAttribute('aria-hidden', 'true');
+    tooltip.style.pointerEvents = 'none';
+    currentZone = null;
+    currentPlace = null;
   }
 
-  if (tooltipBtn) {
-    tooltipBtn.addEventListener('click', (e) => {
+  if (tooltipDetailsBtn) {
+    tooltipDetailsBtn.addEventListener('click', (e) => {
+      e.preventDefault();
       e.stopPropagation();
       if (currentPlace && typeof window.openObjectModal === 'function') {
-        window.openObjectModal(currentPlace);
         hideTooltip();
+        window.openObjectModal(currentPlace);
       }
     });
   }
 
-  zones.forEach(zone => {
-    zone.addEventListener('mouseenter', () => showTooltip(zone));
-    zone.addEventListener('mouseleave', hideTooltip);
-    zone.addEventListener('touchstart', (e) => {
-      e.preventDefault();
+  map.addEventListener('mouseover', (evt) => {
+    const zone = evt.target.closest('.map-zone');
+    if (!zone || zone === currentZone) return;
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+    if (showTimeout) clearTimeout(showTimeout);
+    showTimeout = setTimeout(() => {
       showTooltip(zone);
-    });
+      showTimeout = null;
+    }, 300);
+  }, true);
+
+  map.addEventListener('mouseout', (evt) => {
+    const zone = evt.target.closest('.map-zone');
+    if (showTimeout) {
+      clearTimeout(showTimeout);
+      showTimeout = null;
+    }
+    if (zone && zone === currentZone) {
+      const relatedTarget = evt.relatedTarget;
+      if (!relatedTarget || !tooltip.contains(relatedTarget)) {
+        hideTimeout = setTimeout(() => hideTooltip(), 200);
+      }
+    }
+  }, true);
+
+  tooltip.addEventListener('mouseleave', () => {
+    hideTimeout = setTimeout(() => hideTooltip(), 100);
   });
+
+  map.addEventListener('click', (evt) => {
+    if (isPanning) return;
+    const zone = evt.target.closest('.map-zone');
+    if (!zone) return;
+    const place = appState.places.find(p => p.id === Number(zone.dataset.id));
+    if (place) {
+      showTooltip(zone, place);
+    }
+  });
+
+  map.addEventListener('touchstart', (evt) => {
+    const zone = evt.target.closest('.map-zone');
+    if (zone && evt.touches.length === 1) {
+      evt.preventDefault();
+      const place = appState.places.find(p => p.id === Number(zone.dataset.id));
+      if (place) {
+        showTooltip(zone, place);
+      }
+    }
+  }, { passive: false });
 }
 
 export { setupMapInteractions, setupMapInteractionsRoutes, setupMapTooltips, setupHideMapButton, filterMapZones, highlightPlaceOnMap, getMapCoordinates, setupMapModal };
