@@ -75,7 +75,8 @@
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: fadeInUp 0.8s ease-out 0.2s both;
-  height: 500px;
+  min-height: 600px;
+  height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;

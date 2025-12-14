@@ -20,7 +20,11 @@ function setupModals() {
 
 function openModal(id) {
   const modal = document.getElementById(id);
-  if (modal) modal.setAttribute('aria-hidden', 'false');
+  if (modal) {
+    modal.setAttribute('aria-hidden', 'false');
+    modal.classList.add('modal--visible');
+    document.body.style.overflow = 'hidden';
+  }
 }
 
 function closeModal(modal) {
@@ -28,6 +32,8 @@ function closeModal(modal) {
   const modalDialog = modal.querySelector('.modal-dialog');
   if (modalDialog) modalDialog.classList.remove('modal-single-image');
   modal.setAttribute('aria-hidden', 'true');
+  modal.classList.remove('modal--visible');
+  document.body.style.overflow = '';
 }
 
 function openObjectModal(place) {

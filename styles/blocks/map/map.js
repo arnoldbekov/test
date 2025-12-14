@@ -392,18 +392,28 @@ function setupMapModal() {
   }
   
   if (closeBtn && mapModal) {
-    closeBtn.addEventListener('click', () => {
+    closeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       if (typeof window.closeModal === 'function') {
         window.closeModal(mapModal);
+      } else if (mapModal) {
+        mapModal.setAttribute('aria-hidden', 'true');
+        mapModal.classList.remove('modal--visible');
+        document.body.style.overflow = '';
       }
     });
   }
-  
+
   if (mapModal) {
     mapModal.addEventListener('click', (e) => {
-      if (e.target === mapModal) {
+      if (e.target === mapModal || e.target.classList.contains('modal-dialog--map')) {
         if (typeof window.closeModal === 'function') {
           window.closeModal(mapModal);
+        } else {
+          mapModal.setAttribute('aria-hidden', 'true');
+          mapModal.classList.remove('modal--visible');
+          document.body.style.overflow = '';
         }
       }
     });
@@ -434,18 +444,20 @@ function setupMapInteractionsForModal() {
   function smoothZoom(targetScale, centerX, centerY) {
     const newScale = Math.min(maxScale, Math.max(minScale, targetScale));
     if (!content || newScale === scale) return;
+    const rect = map.getBoundingClientRect();
     const pt = map.createSVGPoint();
     pt.x = centerX;
     pt.y = centerY;
-    const screenCTM = content.getScreenCTM();
-    if (screenCTM) {
-      const localPoint = pt.matrixTransform(screenCTM.inverse());
-      const scaleFactor = newScale / scale;
-      translateX = centerX - localPoint.x * scaleFactor * scale;
-      translateY = centerY - localPoint.y * scaleFactor * scale;
-      scale = newScale;
-      applyTransform();
-    }
+    const svgP = pt.matrixTransform(map.getScreenCTM().inverse());
+    const scaleFactor = newScale / scale;
+    // Calculate the point in SVG coordinates before transform
+    const currentX = (svgP.x - translateX) / scale;
+    const currentY = (svgP.y - translateY) / scale;
+    // Calculate new translate to keep the same point under the cursor
+    translateX = svgP.x - currentX * newScale;
+    translateY = svgP.y - currentY * newScale;
+    scale = newScale;
+    applyTransform();
   }
 
   const zoomInBtn = document.getElementById('zoomInBtnModal');
@@ -485,7 +497,7 @@ function setupMapInteractionsForModal() {
   }, { passive: false });
 
   map.addEventListener('mousedown', (e) => {
-    if (e.button === 0) {
+    if (e.button === 0 && !e.target.closest('.map-zone')) {
       isPanning = true;
       startX = e.clientX - translateX;
       startY = e.clientY - translateY;
@@ -551,6 +563,29 @@ function setupMapInteractionsForModal() {
 
   map.addEventListener('touchend', () => {
     isPanning = false;
+  });
+
+  // Add click handler for zones
+  map.addEventListener('click', evt => {
+    if (isPanning) return;
+    const zone = evt.target.closest('.map-zone');
+    if (!zone) return;
+    const place = appState.places.find(p => p.id === Number(zone.dataset.id));
+    if (place && typeof window.openObjectModal === 'function') {
+      window.openObjectModal(place);
+    }
+  });
+
+  map.addEventListener('keydown', evt => {
+    if (evt.key === 'Enter' || evt.key === ' ') {
+      const zone = evt.target.closest('.map-zone');
+      if (!zone) return;
+      evt.preventDefault();
+      const place = appState.places.find(p => p.id === Number(zone.dataset.id));
+      if (place && typeof window.openObjectModal === 'function') {
+        window.openObjectModal(place);
+      }
+    }
   });
 }
 
