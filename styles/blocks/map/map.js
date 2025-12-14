@@ -199,8 +199,26 @@ function setupMapTooltips(mapElement, tooltipId) {
     }
   }, true);
 
+  mapElement.addEventListener('touchstart', (evt) => {
+    const zone = evt.target.closest('.map-zone');
+    if (!zone) return;
+    evt.preventDefault();
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+    if (showTimeout) clearTimeout(showTimeout);
+    showTooltip(zone);
+  }, true);
+
   tooltip.addEventListener('mouseleave', () => {
     hideTimeout = setTimeout(() => hideTooltip(), 100);
+  });
+
+  document.addEventListener('touchstart', (evt) => {
+    if (currentZone && !tooltip.contains(evt.target) && !evt.target.closest('.map-zone')) {
+      hideTooltip();
+    }
   });
 
   if (tooltipBtn) {
