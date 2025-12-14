@@ -119,11 +119,9 @@
   object-fit: cover;
   display: block;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
 }
 
-.object-card:hover .object-card__image,
-.object-card:hover .object-card__image img {
+.object-card:hover .object-card__image {
   transform: scale(1.05);
 }
 
