@@ -98,6 +98,30 @@
   }
 }
 
+@media (max-width: 768px) {
+  .stats-section {
+    overflow-x: hidden !important;
+  }
+  .stats-section::-webkit-scrollbar,
+  .stats-section *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .stats-section__layout,
+  .stats-layout {
+    overflow-x: hidden !important;
+  }
+  .stats-section__layout::-webkit-scrollbar,
+  .stats-layout::-webkit-scrollbar,
+  .stats-section__layout *::-webkit-scrollbar,
+  .stats-layout *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
 /* Legacy support for backward compatibility */
 .stats-layout {
   display: grid;

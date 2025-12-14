@@ -312,10 +312,36 @@
 @media (max-width: 768px) {
   .timeline-section {
     padding: 3rem 0 2.5rem;
+    overflow-x: hidden !important;
+  }
+  .timeline-section::-webkit-scrollbar,
+  .timeline-section *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
   .timeline-section__timeline {
     gap: 0.5rem;
     flex-wrap: wrap;
+    overflow-x: hidden !important;
+  }
+  .timeline-section__timeline::-webkit-scrollbar,
+  .timeline-section__timeline *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .timeline-section__events,
+  .timeline-events {
+    overflow-x: hidden !important;
+  }
+  .timeline-section__events::-webkit-scrollbar,
+  .timeline-events::-webkit-scrollbar,
+  .timeline-section__events *::-webkit-scrollbar,
+  .timeline-events *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
   .timeline-section__period-btn,
   .period-btn {

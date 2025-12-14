@@ -279,10 +279,34 @@
   .hero,
   .hero-section {
     padding: 3rem 0 5rem;
+    overflow-x: hidden !important;
   }
   .hero__grid,
   .hero-grid {
     gap: 1.5rem;
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+  }
+  .hero__grid::-webkit-scrollbar,
+  .hero-grid::-webkit-scrollbar,
+  .hero__grid *::-webkit-scrollbar,
+  .hero-grid *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  .hero__content,
+  .hero__grid > .hero__content:first-child {
+    overflow-x: hidden !important;
+    overflow-y: hidden !important;
+  }
+  .hero__content::-webkit-scrollbar,
+  .hero__grid > .hero__content:first-child::-webkit-scrollbar,
+  .hero__content *::-webkit-scrollbar,
+  .hero__grid > .hero__content:first-child *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
   .hero__card,
   .hero-card {
