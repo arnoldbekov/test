@@ -554,20 +554,23 @@
 .object-card-image,
 .object-card__image {
   width: 100%;
-  height: 140px;
-  margin: -1.5rem -1.25rem 0.75rem -1.25rem;
+  height: 240px;
+  margin: -1.75rem -1.75rem 1rem -1.75rem;
   overflow: hidden;
   border-radius: 20px 20px 0 0;
   background: #f5f5dc;
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .object-card-image img,
 .object-card__image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
