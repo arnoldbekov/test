@@ -48,6 +48,18 @@ body {
   padding-top: 90px;
 }
 
+@media (max-width: 768px) {
+  body {
+    padding-top: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 75px;
+  }
+}
+
 body::before {
   content: '';
   position: fixed;
