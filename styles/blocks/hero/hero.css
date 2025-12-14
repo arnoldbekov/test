@@ -287,6 +287,17 @@
   .hero__card,
   .hero-card {
     padding: 1.5rem 1.75rem;
+    overflow: hidden !important;
+    overflow-y: hidden !important;
+    overflow-x: hidden !important;
+  }
+  .hero__card::-webkit-scrollbar,
+  .hero__card *::-webkit-scrollbar,
+  .hero-card::-webkit-scrollbar,
+  .hero-card *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
   }
   .hero__logo,
   .hero-logo {

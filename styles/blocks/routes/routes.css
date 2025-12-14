@@ -433,22 +433,40 @@
   .routes-layout {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
   }
   .routes-section__premade,
-  .routes-section__custom,
   .premade,
-  .custom-routes {
-    padding: 1.5rem 1.75rem;
+  .routes__premade {
+    order: 1;
     width: 100%;
     max-width: 100%;
+    padding: 1.5rem 1.75rem;
+  }
+  .routes-section__custom,
+  .custom-routes,
+  .routes__custom {
+    order: 2;
+    width: 100%;
+    max-width: 100%;
+    padding: 1.5rem 1.75rem;
   }
   .premade-route,
   .saved-route {
     padding: 1.25rem;
+    width: 100%;
+    max-width: 100%;
   }
   .premade-route h4,
   .saved-route h4 {
     font-size: 1.1rem;
+  }
+  .routes-section__btn,
+  .route-btn {
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    font-size: 0.95rem;
   }
 }
 
@@ -460,37 +478,71 @@
   .routes-layout {
     grid-template-columns: 1fr;
     gap: 1.25rem;
+    display: flex;
+    flex-direction: column;
   }
   .routes-section__premade,
-  .routes-section__custom,
   .premade,
-  .custom-routes {
-    padding: 1.25rem 1.5rem;
+  .routes__premade {
+    order: 1;
+    padding: 1.5rem 1.25rem;
     border-radius: 16px;
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
   }
+  .routes-section__custom,
+  .custom-routes,
+  .routes__custom {
+    order: 2;
+    padding: 1.5rem 1.25rem;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .routes-section__premade h3,
+  .premade h3,
+  .routes__premade h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .routes-section__custom h3,
+  .custom-routes h3,
+  .routes__custom h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
   .routes-section__btn,
   .route-btn {
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1rem;
     font-size: 0.9rem;
     width: 100%;
+    margin-top: 0.75rem;
+  }
+  #createCustom {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
   }
   .premade-route,
   .saved-route {
     padding: 1rem;
     width: 100%;
     max-width: 100%;
+    margin-bottom: 1rem;
   }
   .premade-route h4,
   .saved-route h4 {
     font-size: 1rem;
+    margin-bottom: 0.5rem;
   }
   .premade-route-actions,
   .saved-route-actions {
     gap: 0.5rem;
     flex-wrap: wrap;
+    margin-top: 0.75rem;
   }
   .premade-route-actions .btn-primary,
   .premade-route-actions .btn-secondary,
@@ -501,13 +553,18 @@
     flex: 1;
     min-width: 0;
   }
-  .routes-section__premade h3,
-  .routes-section__custom h3 {
-    font-size: 1.25rem;
-  }
   .route-note {
     font-size: 0.85rem;
     margin-top: 1rem;
+    line-height: 1.5;
+  }
+  .routes-section__summary,
+  .routes__summary {
+    margin-top: 1rem;
+  }
+  .routes-section__summary ul,
+  .routes__summary ul {
+    font-size: 0.9rem;
   }
 }
 
