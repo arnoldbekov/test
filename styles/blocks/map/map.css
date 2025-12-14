@@ -75,8 +75,8 @@
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: fadeInUp 0.8s ease-out 0.2s both;
-  min-height: 600px;
-  height: 600px;
+  min-height: 750px;
+  height: 750px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,7 +121,7 @@
 }
 
 body:has(#pmrMapRoutes) .map-section__wrapper {
-  height: 600px;
+  height: 750px;
 }
 
 #pmrMap {
