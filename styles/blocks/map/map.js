@@ -171,9 +171,16 @@ function setupMapTooltips(mapElement, tooltipId) {
     tooltipDetailsBtn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      if (currentPlace && typeof window.openObjectModal === 'function') {
+      e.stopImmediatePropagation();
+      if (currentPlace) {
         hideTooltip(true);
-        window.openObjectModal(currentPlace);
+        setTimeout(() => {
+          if (typeof window.openObjectModal === 'function') {
+            window.openObjectModal(currentPlace);
+          } else {
+            console.error('openObjectModal function not found');
+          }
+        }, 100);
       }
     });
   }
@@ -227,9 +234,8 @@ function setupMapTooltips(mapElement, tooltipId) {
       return;
     }
     const place = appState.places.find(p => p.id === Number(zone.dataset.id));
-    if (place && typeof window.openObjectModal === 'function') {
-      hideTooltip(true);
-      window.openObjectModal(place);
+    if (place) {
+      showTooltip(zone, place, true);
     }
   });
 
@@ -431,6 +437,7 @@ function setupMapModal() {
     closeBtn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
+      e.stopImmediatePropagation();
       if (typeof window.closeModal === 'function') {
         window.closeModal(mapModal);
       } else if (mapModal) {
@@ -753,9 +760,8 @@ function setupMapTooltipsForModal() {
       return;
     }
     const place = appState.places.find(p => p.id === Number(zone.dataset.id));
-    if (place && typeof window.openObjectModal === 'function') {
-      hideTooltip(true);
-      window.openObjectModal(place);
+    if (place) {
+      showTooltip(zone, place, true);
     }
   });
 
