@@ -360,12 +360,52 @@
   padding-bottom: 0.75rem;
 }
 
+/* Убираем анимации при наведении для карточек в избранном */
+.favorites .object-card::before,
+.favorites .gallery-card::before {
+  display: none;
+}
+
+.favorites .object-card:hover,
+.favorites .gallery-card:hover {
+  transform: none;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-color: rgba(212, 175, 55, 0.15);
+}
+
+.favorites .object-card:hover .gallery-thumb img,
+.favorites .gallery-card:hover .gallery-thumb img,
+.favorites .object-card:hover .object-card__image,
+.favorites .object-card:hover .object-card__image img {
+  transform: translate(-50%, -50%);
+}
+
+.favorites .object-card .btn-secondary:hover,
+.favorites .gallery-card .btn-secondary:hover {
+  transform: scale(1);
+  box-shadow: 0 4px 12px rgba(37, 74, 117, 0.15);
+}
+
 .favorites .object-card__description {
   margin: 0.25rem 0 0.6rem 0;
+  padding: 0 1.25rem;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   min-height: 3em;
   max-height: 3em;
+}
+
+.favorites .object-card__title,
+.favorites .gallery-section__card-title {
+  padding: 1rem 1.25rem 0.3rem 1.25rem;
+}
+
+.favorites .gallery-card .btn-secondary,
+.favorites .object-card .btn-secondary {
+  margin: 0.5rem 1.25rem 0.75rem 1.25rem;
 }
 
 /* Растягиваем изображения в избранном на всю ширину карточки и центрируем */
@@ -396,6 +436,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: none;
 }
 
 /* Legacy support - keep old classes for backward compatibility */
