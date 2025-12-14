@@ -8,7 +8,7 @@ import { renderObjectGrid, createObjectCardHTML, setupObjectCardHandlers } from 
 import { setupModals, openModal, closeModal, openObjectModal, handleObjectAction, openCompareModal, openSingleImageModal } from '../../styles/blocks/modals/modals.js';
 import { setupMapInteractions, setupMapInteractionsRoutes, setupHideMapButton, filterMapZones, highlightPlaceOnMap, getMapCoordinates, setupMapModal } from '../../styles/blocks/map/map.js';
 import { buildGallery, setCurrentGalleryIndex, updateGalleryNavButtons, openGalleryByOffset, attachMapFocusHandler, attachDetailsHandler } from '../../styles/blocks/gallery/gallery.js';
-import { focusPlaceOnMap, checkAndFocusPlaceOnLoad } from '../blocks/navigation.js';
+import { focusPlaceOnMap, checkAndFocusPlaceOnLoad, initMobileMenu } from '../blocks/navigation.js';
 import { buildStats, openPeriodModal } from '../../styles/blocks/stats/stats.js';
 import { initApp } from '../blocks/init.js';
 

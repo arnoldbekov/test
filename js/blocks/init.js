@@ -5,10 +5,11 @@ import { setupMapInteractions, setupMapInteractionsRoutes, setupHideMapButton, s
 import { setupModals } from '../../styles/blocks/modals/modals.js';
 import { buildStats } from '../../styles/blocks/stats/stats.js';
 import { buildGallery } from '../../styles/blocks/gallery/gallery.js';
-import { checkAndFocusPlaceOnLoad } from './navigation.js';
+import { checkAndFocusPlaceOnLoad, initMobileMenu } from './navigation.js';
 import { renderObjectGrid } from '../../styles/blocks/cards/cards.js';
 
 function initApp() {
+  if (typeof initMobileMenu === 'function') initMobileMenu();
   if (typeof window.setupTimeline === 'function') window.setupTimeline();
   if (typeof window.setupSearch === 'function') window.setupSearch();
   if (typeof window.setupMapInteractions === 'function') window.setupMapInteractions();
