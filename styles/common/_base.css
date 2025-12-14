@@ -31,6 +31,11 @@ html {
   box-sizing: border-box;
 }
 
+main, section, header, footer {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Lora', serif;
   background: radial-gradient(ellipse at top, #fffaf0 0%, var(--beige) 50%, #e7dec4 100%);
