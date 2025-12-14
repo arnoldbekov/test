@@ -5,9 +5,6 @@
   padding: 3rem 0;
   position: relative;
   background: linear-gradient(180deg, rgba(255, 250, 240, 0.5) 0%, var(--beige) 100%);
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
 }
 
 .map-section::after {
@@ -78,8 +75,7 @@
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: fadeInUp 0.8s ease-out 0.2s both;
-  min-height: 850px;
-  height: 850px;
+  height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,7 +120,7 @@
 }
 
 body:has(#pmrMapRoutes) .map-section__wrapper {
-  height: 850px;
+  height: 600px;
 }
 
 #pmrMap {
@@ -375,8 +371,7 @@ body:has(#pmrMapRoutes) .map-section__wrapper {
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: fadeInUp 0.8s ease-out 0.2s both;
-  min-height: 850px;
-  height: 850px;
+  height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -413,8 +408,7 @@ body:has(#pmrMapRoutes) .map-section__wrapper {
 
 body:has(#pmrMapRoutes) .map-wrapper,
 body:has(#pmrMapRoutes) .map__wrapper {
-  height: 850px;
-  min-height: 850px;
+  height: 600px;
 }
 
 .map-controls,

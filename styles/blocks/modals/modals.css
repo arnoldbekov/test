@@ -142,16 +142,6 @@
   }
 }
 
-.modal__dialog::-webkit-scrollbar { width: 10px; }
-.modal__dialog::-webkit-scrollbar-track { background: rgba(247, 240, 221, 0.6); border-radius: 6px; }
-.modal__dialog::-webkit-scrollbar-thumb {
-  background: rgba(212, 175, 55, 0.55);
-  border-radius: 6px;
-  border: 2px solid rgba(255, 255, 255, 0.6);
-}
-.modal__dialog::-webkit-scrollbar-thumb:hover {
-  background: rgba(212, 175, 55, 0.75);
-}
 
 .modal__dialog .object-details dt {
   font-weight: 700;
