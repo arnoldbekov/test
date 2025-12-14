@@ -161,10 +161,17 @@ p {
 }
 
 @media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+  }
   .container {
     padding: 0 1rem;
     width: 100%;
     max-width: 100%;
+    overflow-x: hidden;
   }
   .header-inner { flex-direction: column; gap: 1rem; }
   .nav { flex-wrap: wrap; justify-content: center; }
