@@ -22,8 +22,15 @@
   display: flex;
   justify-content: space-between;
   gap: 1.5rem;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.map-fullscreen-btn {
+  margin-top: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .map-section__header p {
