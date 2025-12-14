@@ -429,12 +429,18 @@
   .routes-section {
     padding: 2.5rem 0;
   }
-  .routes-section__layout {
+  .routes-section__layout,
+  .routes-layout {
+    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
   .routes-section__premade,
-  .routes-section__custom {
+  .routes-section__custom,
+  .premade,
+  .custom-routes {
     padding: 1.5rem 1.75rem;
+    width: 100%;
+    max-width: 100%;
   }
   .premade-route,
   .saved-route {
@@ -450,14 +456,32 @@
   .routes-section {
     padding: 2rem 0;
   }
+  .routes-section__layout,
+  .routes-layout {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
   .routes-section__premade,
-  .routes-section__custom {
+  .routes-section__custom,
+  .premade,
+  .custom-routes {
     padding: 1.25rem 1.5rem;
     border-radius: 16px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .routes-section__btn,
+  .route-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    width: 100%;
   }
   .premade-route,
   .saved-route {
     padding: 1rem;
+    width: 100%;
+    max-width: 100%;
   }
   .premade-route h4,
   .saved-route h4 {
@@ -466,11 +490,24 @@
   .premade-route-actions,
   .saved-route-actions {
     gap: 0.5rem;
+    flex-wrap: wrap;
   }
-  .btn-primary,
-  .btn-secondary {
+  .premade-route-actions .btn-primary,
+  .premade-route-actions .btn-secondary,
+  .saved-route-actions .btn-primary,
+  .saved-route-actions .btn-secondary {
     padding: 0.6rem 1rem;
     font-size: 0.85rem;
+    flex: 1;
+    min-width: 0;
+  }
+  .routes-section__premade h3,
+  .routes-section__custom h3 {
+    font-size: 1.25rem;
+  }
+  .route-note {
+    font-size: 0.85rem;
+    margin-top: 1rem;
   }
 }
 

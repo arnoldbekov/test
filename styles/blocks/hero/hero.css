@@ -50,6 +50,16 @@
 .hero__grid > .hero__content:first-child {
   animation: fadeInLeft 0.8s ease-out 0.2s both;
   position: relative;
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.hero__grid > .hero__content:first-child::-webkit-scrollbar,
+.hero__grid > .hero__content:first-child *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .hero__grid .hero__card {
@@ -68,14 +78,19 @@
   backdrop-filter: blur(20px) saturate(180%);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  overflow: hidden;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
 }
 
-.hero__card::-webkit-scrollbar {
-  display: none;
+.hero__card::-webkit-scrollbar,
+.hero__card *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 .hero__card::before {
@@ -146,6 +161,16 @@
   gap: 3rem;
   align-items: center;
   animation: fadeInUp 0.8s ease-out;
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.hero-grid::-webkit-scrollbar,
+.hero-grid *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .hero-grid > div:first-child {
