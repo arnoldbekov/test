@@ -368,5 +368,231 @@ function getMapCoordinates(placeId) {
   };
 }
 
-export { setupMapInteractions, setupMapInteractionsRoutes, setupMapTooltips, setupHideMapButton, filterMapZones, highlightPlaceOnMap, getMapCoordinates };
+function setupMapModal() {
+  const openBtn = document.getElementById('openMapModalBtn');
+  const mapModal = document.getElementById('mapModal');
+  const closeBtn = mapModal ? mapModal.querySelector('.close') : null;
+  
+  if (openBtn && mapModal) {
+    openBtn.addEventListener('click', () => {
+      if (typeof window.openModal === 'function') {
+        window.openModal('mapModal');
+        setTimeout(() => {
+          const modalMap = document.getElementById('pmrMapModal');
+          if (modalMap && typeof window.loadAndRenderMapZones === 'function') {
+            window.loadAndRenderMapZones('mapContentModal');
+          }
+          if (modalMap) {
+            setupMapInteractionsForModal();
+            setupMapTooltipsForModal();
+          }
+        }, 100);
+      }
+    });
+  }
+  
+  if (closeBtn && mapModal) {
+    closeBtn.addEventListener('click', () => {
+      if (typeof window.closeModal === 'function') {
+        window.closeModal(mapModal);
+      }
+    });
+  }
+  
+  if (mapModal) {
+    mapModal.addEventListener('click', (e) => {
+      if (e.target === mapModal) {
+        if (typeof window.closeModal === 'function') {
+          window.closeModal(mapModal);
+        }
+      }
+    });
+  }
+}
+
+function setupMapInteractionsForModal() {
+  const map = document.getElementById('pmrMapModal');
+  if (!map) return;
+  const content = document.getElementById('mapContentModal');
+  const SVG_WIDTH = 1000;
+  const SVG_HEIGHT = 700;
+  let scale = 1, minScale = 1, maxScale = 6, translateX = 0, translateY = 0, isPanning = false, startX = 0, startY = 0;
+
+  function clampTransform() {
+    const minX = SVG_WIDTH * (1 - scale), maxX = 0, minY = SVG_HEIGHT * (1 - scale), maxY = 0;
+    if (translateX < minX) translateX = minX;
+    if (translateX > maxX) translateX = maxX;
+    if (translateY < minY) translateY = minY;
+    if (translateY > maxY) translateY = maxY;
+  }
+
+  function applyTransform() {
+    clampTransform();
+    if (content) content.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`);
+  }
+
+  function smoothZoom(targetScale, centerX, centerY) {
+    const newScale = Math.min(maxScale, Math.max(minScale, targetScale));
+    if (!content || newScale === scale) return;
+    const pt = map.createSVGPoint();
+    pt.x = centerX;
+    pt.y = centerY;
+    const screenCTM = content.getScreenCTM();
+    if (screenCTM) {
+      const localPoint = pt.matrixTransform(screenCTM.inverse());
+      const scaleFactor = newScale / scale;
+      translateX = centerX - localPoint.x * scaleFactor * scale;
+      translateY = centerY - localPoint.y * scaleFactor * scale;
+      scale = newScale;
+      applyTransform();
+    }
+  }
+
+  const zoomInBtn = document.getElementById('zoomInBtnModal');
+  const zoomOutBtn = document.getElementById('zoomOutBtnModal');
+  const zoomResetBtn = document.getElementById('zoomResetBtnModal');
+
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', () => {
+      const rect = map.getBoundingClientRect();
+      smoothZoom(scale * 1.3, rect.width / 2, rect.height / 2);
+    });
+  }
+
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', () => {
+      const rect = map.getBoundingClientRect();
+      smoothZoom(scale / 1.3, rect.width / 2, rect.height / 2);
+    });
+  }
+
+  if (zoomResetBtn) {
+    zoomResetBtn.addEventListener('click', () => {
+      scale = 1;
+      translateX = 0;
+      translateY = 0;
+      applyTransform();
+    });
+  }
+
+  map.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const rect = map.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const delta = e.deltaY > 0 ? 0.9 : 1.1;
+    smoothZoom(scale * delta, x, y);
+  }, { passive: false });
+
+  map.addEventListener('mousedown', (e) => {
+    if (e.button === 0) {
+      isPanning = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+      map.style.cursor = 'grabbing';
+    }
+  });
+
+  map.addEventListener('mousemove', (e) => {
+    if (isPanning) {
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      applyTransform();
+    }
+  });
+
+  map.addEventListener('mouseup', () => {
+    isPanning = false;
+    map.style.cursor = 'default';
+  });
+
+  map.addEventListener('mouseleave', () => {
+    isPanning = false;
+    map.style.cursor = 'default';
+  });
+
+  let touchStartDistance = 0;
+  let touchStartScale = 1;
+
+  map.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2) {
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      touchStartDistance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
+      touchStartScale = scale;
+    } else if (e.touches.length === 1) {
+      isPanning = true;
+      const touch = e.touches[0];
+      const rect = map.getBoundingClientRect();
+      startX = touch.clientX - translateX;
+      startY = touch.clientY - translateY;
+    }
+  }, { passive: true });
+
+  map.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      const distance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
+      const newScale = touchStartScale * (distance / touchStartDistance);
+      const rect = map.getBoundingClientRect();
+      const centerX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
+      const centerY = (touch1.clientY + touch2.clientY) / 2 - rect.top;
+      smoothZoom(newScale, centerX, centerY);
+    } else if (e.touches.length === 1 && isPanning) {
+      e.preventDefault();
+      const touch = e.touches[0];
+      translateX = touch.clientX - startX;
+      translateY = touch.clientY - startY;
+      applyTransform();
+    }
+  }, { passive: false });
+
+  map.addEventListener('touchend', () => {
+    isPanning = false;
+  });
+}
+
+function setupMapTooltipsForModal() {
+  const map = document.getElementById('pmrMapModal');
+  if (!map) return;
+  const tooltip = document.getElementById('mapTooltipModal');
+  if (!tooltip) return;
+  const tooltipTitle = tooltip.querySelector('.tooltip-title');
+  const tooltipDescription = tooltip.querySelector('.tooltip-description');
+  const tooltipImage = tooltip.querySelector('.tooltip-image');
+  const zones = map.querySelectorAll('.map-zone');
+
+  function showTooltip(zone) {
+    const place = appState.places.find(p => p.id === Number(zone.dataset.id));
+    if (!place) return;
+    tooltipTitle.textContent = place.name;
+    const descriptionText = place.short || '';
+    tooltipDescription.textContent = descriptionText.length > 50 ? descriptionText.substring(0, 50) + '...' : descriptionText;
+    if (place.images && place.images.now) {
+      tooltipImage.src = normalizeImagePath(place.images.now);
+      tooltipImage.alt = place.name;
+      tooltipImage.style.display = 'block';
+    } else {
+      tooltipImage.style.display = 'none';
+    }
+    tooltip.setAttribute('aria-hidden', 'false');
+  }
+
+  function hideTooltip() {
+    tooltip.setAttribute('aria-hidden', 'true');
+  }
+
+  zones.forEach(zone => {
+    zone.addEventListener('mouseenter', () => showTooltip(zone));
+    zone.addEventListener('mouseleave', hideTooltip);
+    zone.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      showTooltip(zone);
+    });
+  });
+}
+
+export { setupMapInteractions, setupMapInteractionsRoutes, setupMapTooltips, setupHideMapButton, filterMapZones, highlightPlaceOnMap, getMapCoordinates, setupMapModal };
 

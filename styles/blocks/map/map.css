@@ -68,10 +68,22 @@
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: fadeInUp 0.8s ease-out 0.2s both;
-  max-height: 70vh;
+  height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.map-fullscreen-btn {
+  margin-top: 1rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .map-fullscreen-btn {
+    width: 100%;
+    margin-top: 0.75rem;
+  }
 }
 
 .map-section__wrapper::before {
@@ -101,13 +113,12 @@
 }
 
 body:has(#pmrMapRoutes) .map-section__wrapper {
-  max-height: 85vh;
+  height: 600px;
 }
 
 #pmrMap {
   width: 100%;
-  height: auto;
-  max-height: 70vh;
+  height: 100%;
   display: block;
   object-fit: contain;
 }
@@ -564,13 +575,13 @@ body:has(#pmrMapRoutes) .map__wrapper {
     min-width: 100%;
   }
   .map-section__wrapper {
-    max-height: 60vh;
+    height: 450px;
     border-width: 4px;
     border-radius: 16px;
   }
   #pmrMap,
   #pmrMapRoutes {
-    max-height: 60vh;
+    height: 100%;
   }
   .map-tooltip,
   .map__tooltip {
@@ -603,24 +614,24 @@ body:has(#pmrMapRoutes) .map__wrapper {
 
 @media (max-width: 768px) {
   .map-section {
-    padding: 2rem 0;
+    padding: 1.5rem 0;
   }
   .map-section__wrapper {
-    max-height: 50vh;
+    height: 400px;
     border-width: 3px;
     border-radius: 12px;
     margin-bottom: 1.5rem;
   }
   #pmrMap,
   #pmrMapRoutes {
-    max-height: 50vh;
+    height: 100%;
     width: 100%;
-    height: auto;
   }
   .map-wrapper,
   .map__wrapper {
-    overflow: hidden;
+    overflow: visible;
     touch-action: pan-x pan-y;
+    position: relative;
   }
   .map-tooltip,
   .map__tooltip {
@@ -668,25 +679,26 @@ body:has(#pmrMapRoutes) .map__wrapper {
 
 @media (max-width: 480px) {
   .map-section {
-    padding: 1.5rem 0;
+    padding: 1rem 0;
   }
   .map-section__header h2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
   }
   .map-section__header p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
   }
   .map-section__wrapper {
-    max-height: 45vh;
+    height: 350px;
     border-width: 2px;
     border-radius: 10px;
     margin-bottom: 1rem;
   }
   #pmrMap,
   #pmrMapRoutes {
-    max-height: 45vh;
+    height: 100%;
     width: 100%;
-    height: auto;
   }
   .map-tooltip,
   .map__tooltip {

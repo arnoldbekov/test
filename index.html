@@ -73,6 +73,7 @@
           <h2 id="map-title-wrapper">Интерактивная карта региона</h2>
           <p>Наведите курсор или нажмите на отметку на карте, чтобы узнать больше об объекте. Масштаб карты условный и предназначен для учебных целей.</p>
         </div>
+        <button type="button" id="openMapModalBtn" class="btn-secondary map-fullscreen-btn" aria-label="Открыть карту в полном размере">Открыть карту</button>
       </div>
         <div class="map-wrapper map__wrapper" role="region" aria-label="Карта культурных объектов">
           <div class="map-tooltip map__tooltip" id="mapTooltip" role="tooltip" aria-hidden="true">
@@ -124,6 +125,41 @@
     </div>
   </section>
 </main>
+
+<div class="modal" id="mapModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog--map" role="dialog" aria-modal="true" aria-labelledby="mapModalTitle">
+    <button class="close" type="button" aria-label="Закрыть карту">×</button>
+    <h2 id="mapModalTitle">Интерактивная карта региона</h2>
+    <div class="map-modal-wrapper">
+      <div class="map-tooltip map__tooltip" id="mapTooltipModal" role="tooltip" aria-hidden="true">
+        <div class="tooltip-content">
+          <img class="tooltip-image" src="" alt="" loading="lazy">
+          <div class="tooltip-text">
+            <h4 class="tooltip-title"></h4>
+            <p class="tooltip-description"></p>
+          </div>
+        </div>
+      </div>
+      <div class="map-controls map__controls" aria-label="Управление масштабом карты">
+        <button type="button" id="zoomInBtnModal" class="map-zoom-btn map__zoom-btn" aria-label="Приблизить карту">+</button>
+        <button type="button" id="zoomOutBtnModal" class="map-zoom-btn map__zoom-btn" aria-label="Отдалить карту">−</button>
+        <button type="button" id="zoomResetBtnModal" class="map-zoom-reset map__zoom-reset" aria-label="Показать карту целиком">Сброс</button>
+      </div>
+      <svg id="pmrMapModal" viewBox="0 0 1000 700" xmlns="http://www.w3.org/2000/svg">
+        <g id="mapContentModal">
+          <image
+            href="assets/img/Pridnestrovie_Locator_map.svg"
+            x="0"
+            y="0"
+            width="1000"
+            height="700"
+            preserveAspectRatio="xMidYMid meet"
+          />
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
 
 <div class="modal" id="objectModal" aria-hidden="true">
   <div class="modal-dialog" role="dialog" aria-labelledby="objTitle" aria-modal="true">

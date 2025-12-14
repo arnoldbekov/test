@@ -6,7 +6,7 @@ import { setupTimeline, renderTimelineEvents } from '../../styles/blocks/timelin
 import { setupSearch, applyFilters } from '../blocks/search.js';
 import { renderObjectGrid, createObjectCardHTML, setupObjectCardHandlers } from '../../styles/blocks/cards/cards.js';
 import { setupModals, openModal, closeModal, openObjectModal, handleObjectAction, openCompareModal, openSingleImageModal } from '../../styles/blocks/modals/modals.js';
-import { setupMapInteractions, setupMapInteractionsRoutes, setupHideMapButton, filterMapZones, highlightPlaceOnMap, getMapCoordinates } from '../../styles/blocks/map/map.js';
+import { setupMapInteractions, setupMapInteractionsRoutes, setupHideMapButton, filterMapZones, highlightPlaceOnMap, getMapCoordinates, setupMapModal } from '../../styles/blocks/map/map.js';
 import { buildGallery, setCurrentGalleryIndex, updateGalleryNavButtons, openGalleryByOffset, attachMapFocusHandler, attachDetailsHandler } from '../../styles/blocks/gallery/gallery.js';
 import { focusPlaceOnMap, checkAndFocusPlaceOnLoad } from '../blocks/navigation.js';
 import { buildStats, openPeriodModal } from '../../styles/blocks/stats/stats.js';
@@ -40,6 +40,7 @@ window.openSingleImageModal = openSingleImageModal;
 window.setupMapInteractions = setupMapInteractions;
 window.setupMapInteractionsRoutes = setupMapInteractionsRoutes;
 window.setupHideMapButton = setupHideMapButton;
+window.setupMapModal = setupMapModal;
 window.filterMapZones = filterMapZones;
 window.highlightPlaceOnMap = highlightPlaceOnMap;
 window.getMapCoordinates = getMapCoordinates;
