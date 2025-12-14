@@ -4,6 +4,7 @@
 /* Objects Grid Block */
 .objects-grid {
   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1.25rem;
   animation: fadeInUp 0.6s ease-out;
 }
@@ -455,7 +456,9 @@
 }
 
 @media (max-width: 768px) {
-  .objects-grid--full {
+  .objects-grid--full,
+  .objects-grid,
+  .objects__grid {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 0.9rem;
   }
@@ -481,13 +484,15 @@
 }
 
 @media (max-width: 480px) {
-  .objects-grid--full {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  .objects-grid--full,
+  .objects-grid,
+  .objects__grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.9rem;
   }
   .objects__grid--full {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.9rem;
   }
   .object-card {
     padding: 0.9rem;
