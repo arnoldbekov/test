@@ -8,6 +8,10 @@
   border-top: 1px solid var(--border-soft);
   border-bottom: 1px solid var(--border-soft);
   position: relative;
+  overflow-x: hidden;
+  overflow-y: visible;
+  width: 100%;
+  max-width: 100%;
 }
 
 .timeline-section::before {
@@ -298,43 +302,112 @@
 @media (max-width: 992px) {
   .timeline-section {
     padding: 4rem 0 3rem;
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    max-width: 100%;
   }
-  .timeline-section__timeline {
+  .timeline-section .container {
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+  .timeline-section__timeline,
+  .timeline {
     gap: 0.6rem;
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    max-width: 100%;
   }
   .timeline-section__period-btn,
   .period-btn {
     padding: 0.75rem 1.75rem;
     font-size: 0.95rem;
   }
+  .timeline-section__events,
+  .timeline-events {
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
   .timeline-section {
     padding: 3rem 0 2.5rem;
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    max-width: 100%;
   }
-  .timeline-section__timeline {
+  .timeline-section .container {
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    max-width: 100%;
+  }
+  .timeline-section__timeline,
+  .timeline {
     gap: 0.5rem;
     flex-wrap: wrap;
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    max-width: 100%;
   }
   .timeline-section__period-btn,
   .period-btn {
     padding: 0.7rem 1.5rem;
     font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  .timeline-section__events,
+  .timeline-events {
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 480px) {
   .timeline-section {
     padding: 2.5rem 0 2rem;
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    max-width: 100%;
   }
-  .timeline-section__timeline {
+  .timeline-section .container {
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 12px;
+  }
+  .timeline-section__timeline,
+  .timeline {
     gap: 0.4rem;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    max-width: 100%;
   }
   .timeline-section__period-btn,
   .period-btn {
     padding: 0.6rem 1.2rem;
     font-size: 0.85rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .timeline-section__events,
+  .timeline-events {
+    overflow-x: hidden;
+    overflow-y: visible;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
