@@ -1,0 +1,46 @@
+@import url("../../common/_vars.css");
+@import url("../../common/_animations.css");
+
+/* Tab Button Block */
+.tab-btn {
+  padding: 0.85rem 2rem;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.98rem;
+  color: var(--muted);
+  margin-bottom: -2px;
+}
+
+.tab-btn:hover {
+  color: var(--navy);
+}
+
+.tab-btn--active {
+  color: var(--navy);
+  border-bottom-color: var(--navy);
+}
+
+/* Legacy support */
+.tab-btn.active {
+  color: var(--navy);
+  border-bottom-color: var(--navy);
+}
+
+@media (max-width: 768px) {
+  .tab-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
+}
+

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Галерея — HistoryTravel</title>
+  <meta name="description" content="HistoryTravel — сравните, как выглядели исторические объекты в прошлом и как они выглядят сегодня.">
+  <link rel="stylesheet" href="../styles/style.css?v=11">
+  <link rel="icon" href="../assets/img/logo.png" type="image/png" sizes="32x32">
+  <link rel="shortcut icon" href="../assets/img/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="../assets/img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-inner header__inner">
+    <a href="../index.html" class="logo-link header__logo-link"><img src="../assets/img/logo.png" alt="HistoryTravel" class="logo-img header__logo-img"></a>
+    <nav class="nav header__nav" aria-label="Основная навигация сайта">
+      <a href="../index.html#map" class="header__nav-link">Карта</a>
+      <a href="../index.html#timeline" class="header__nav-link">Эпохи</a>
+      <a href="routes.html" class="header__nav-link">Маршруты</a>
+      <a href="gallery.html" class="header__nav-link">Галерея</a>
+      <a href="favorites.html" class="header__nav-link">Избранное</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="gallery" class="gallery-section gallery" aria-labelledby="gallery-title" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container">
+      <h2 id="gallery-title">Галерея объектов</h2>
+      <p class="section-lead">Просмотрите фотографии объектов культурного и исторического наследия. Для объектов с архивными фотографиями доступно сравнение «тогда и сейчас». Нажмите на карточку, чтобы открыть просмотр фотографий.</p>
+      <div class="gallery-grid gallery__grid" id="galleryGrid">
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner footer__inner">
+    <div class="footer-top footer__top">
+      <div class="footer-logo footer__logo">
+        <img src="../assets/img/logo.png" alt="HistoryTravel" class="footer-logo-img footer__logo-img">
+        <div class="footer-logo-text footer__logo-text">
+          <div class="footer-logo-title footer__logo-title">HistoryTravel</div>
+          <div class="footer-logo-subtitle footer__logo-subtitle">Карта культурного наследия</div>
+        </div>
+      </div>
+      <div class="footer-nav-columns footer__nav-columns">
+        <div class="footer-nav-col footer__nav-col">
+          <h4>Разделы сайта</h4>
+          <nav class="footer-links footer__links">
+            <a href="../index.html#map" class="footer__link">Карта</a>
+            <a href="../index.html#timeline" class="footer__link">Эпохи</a>
+            <a href="routes.html" class="footer__link">Маршруты</a>
+            <a href="gallery.html" class="footer__link">Галерея</a>
+          </nav>
+        </div>
+        <div class="footer-nav-col footer__nav-col">
+          <h4>Дополнительно</h4>
+          <nav class="footer-links footer__links">
+            <a href="favorites.html" class="footer__link">Избранное</a>
+            <a href="../index.html#map" class="footer__link">О проекте</a>
+            <a href="../index.html#timeline" class="footer__link">Исторические периоды</a>
+          </nav>
+        </div>
+      </div>
+      <div class="footer-section footer__section footer-section--contacts">
+        <h4>Контакты</h4>
+        <div class="footer-contact footer__contact">
+          <p class="footer-contact-item footer__contact-item">Email: <a href="mailto:nikita.stamoi@gmail.com" class="footer__link">nikita.stamoi@gmail.com</a></p>
+          <p class="footer__text">Danich Nikita</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-social-section footer__social-section">
+      <h3>Мы в социальных сетях</h3>
+      <div class="footer-social footer__social">
+        <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" aria-label="Telegram" class="footer__social-link">✈</a>
+        <a href="https://vk.com" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте" class="footer__social-link">VK</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="footer__social-link">📷</a>
+      </div>
+    </div>
+    <div class="footer-bottom footer__bottom">
+      <p>&copy; 2025 HistoryTravel - Карта культурного и исторического наследия региона.</p>
+    </div>
+  </div>
+</footer>
+
+<div class="modal" id="objectModal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-labelledby="objTitle" aria-modal="true">
+    <button class="close" type="button" aria-label="Закрыть окно с описанием объекта">×</button>
+    <h2 id="objTitle"></h2>
+    <div id="objContent"></div>
+  </div>
+</div>
+
+<div class="modal" id="compareModal" aria-hidden="true">
+  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
+    <button class="close" type="button" aria-label="Закрыть окно сравнения">×</button>
+    <div class="modal-nav">
+      <button id="comparePrev" type="button" aria-label="Предыдущая карточка">‹</button>
+      <button id="compareNext" type="button" aria-label="Следующая карточка">›</button>
+    </div>
+    <h3 id="compareTitle">Тогда и сейчас</h3>
+    <div class="compare" id="compareContainer"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="../js/core/map-renderer.js"></script>
+<script src="../js/core/script.js"></script>
+<script type="module" src="../js/core/main.js"></script>
+</body>
+</html>
+

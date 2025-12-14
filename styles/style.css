@@ -1,0 +1,19 @@
+@import url("common/_vars.css");
+@import url("common/_animations.css");
+@import url("common/_base.css");
+@import url("blocks/header/header.css");
+@import url("blocks/hero/hero.css");
+@import url("blocks/map/map.css");
+@import url("blocks/cards/cards.css");
+@import url("blocks/timeline/timeline.css");
+@import url("blocks/routes/routes.css");
+@import url("blocks/gallery/gallery.css");
+@import url("blocks/favorites/favorites.css");
+@import url("blocks/footer/footer.css");
+@import url("blocks/modals/modals.css");
+@import url("blocks/buttons/buttons.css");
+@import url("blocks/tabs/tabs.css");
+@import url("blocks/forms/forms.css");
+@import url("blocks/stats/stats.css");
+
+

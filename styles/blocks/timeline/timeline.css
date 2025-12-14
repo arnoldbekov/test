@@ -1,0 +1,340 @@
+@import url("../../common/_vars.css");
+@import url("../../common/_animations.css");
+
+/* Timeline Section Block */
+.timeline-section {
+  padding: 5rem 0 4rem;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 250, 240, 0.5) 100%);
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+  position: relative;
+}
+
+.timeline-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.5;
+}
+
+.timeline-section__timeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 2rem;
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.timeline-section__period-btn {
+  padding: 0.85rem 2rem;
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  border: 2px solid var(--navy);
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.98rem;
+  letter-spacing: 0.02em;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  position: relative;
+  overflow: hidden;
+  animation: scaleIn 0.4s ease-out both;
+}
+
+.timeline-section__period-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30, 58, 95, 0.15) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.timeline-section__period-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.timeline-section__period-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.timeline-section__period-btn:hover::after {
+  left: 100%;
+}
+
+.timeline-section__period-btn--active,
+.timeline-section__period-btn:hover {
+  background: linear-gradient(135deg, var(--navy) 0%, #254a75 100%);
+  color: #ffffff;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    0 8px 20px rgba(30, 58, 95, 0.35),
+    0 4px 8px rgba(30, 58, 95, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: #1a2f4f;
+}
+
+.timeline-section__period-btn--active {
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 
+    0 8px 20px rgba(30, 58, 95, 0.4),
+    0 4px 8px rgba(30, 58, 95, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 20px rgba(30, 58, 95, 0.3);
+}
+
+.timeline-section__period-btn:nth-child(1) { animation-delay: 0.4s; }
+.timeline-section__period-btn:nth-child(2) { animation-delay: 0.5s; }
+.timeline-section__period-btn:nth-child(3) { animation-delay: 0.6s; }
+.timeline-section__period-btn:nth-child(4) { animation-delay: 0.7s; }
+.timeline-section__period-btn:nth-child(5) { animation-delay: 0.8s; }
+
+.timeline-section__events {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.timeline-section__events--single {
+  grid-template-columns: 1fr;
+}
+
+.timeline-section__card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+  border-radius: 18px;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  box-shadow: 
+    0 6px 18px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.35s ease;
+  box-sizing: border-box;
+  animation: fadeInUp 0.6s ease-out;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.timeline-section__card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border-color: var(--gold);
+}
+
+.timeline-section__card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.timeline-section__card ul {
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.timeline-section__card li + li {
+  margin-top: 0.25rem;
+}
+
+/* Legacy support for backward compatibility */
+.timeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 2rem;
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.timeline .period-btn {
+  animation: scaleIn 0.4s ease-out both;
+}
+
+.timeline .period-btn:nth-child(1) { animation-delay: 0.4s; }
+.timeline .period-btn:nth-child(2) { animation-delay: 0.5s; }
+.timeline .period-btn:nth-child(3) { animation-delay: 0.6s; }
+.timeline .period-btn:nth-child(4) { animation-delay: 0.7s; }
+.timeline .period-btn:nth-child(5) { animation-delay: 0.8s; }
+
+.period-btn {
+  padding: 0.85rem 2rem;
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  border: 2px solid var(--navy);
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.98rem;
+  letter-spacing: 0.02em;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  position: relative;
+  overflow: hidden;
+}
+
+.period-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30, 58, 95, 0.15) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.period-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.period-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.period-btn:hover::after {
+  left: 100%;
+}
+
+.period-btn.active,
+.period-btn:hover {
+  background: linear-gradient(135deg, var(--navy) 0%, #254a75 100%);
+  color: #ffffff;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    0 8px 20px rgba(30, 58, 95, 0.35),
+    0 4px 8px rgba(30, 58, 95, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: #1a2f4f;
+}
+
+.period-btn.active {
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 
+    0 8px 20px rgba(30, 58, 95, 0.4),
+    0 4px 8px rgba(30, 58, 95, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 20px rgba(30, 58, 95, 0.3);
+}
+
+.timeline-events {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.timeline-events--single {
+  grid-template-columns: 1fr;
+}
+
+.timeline-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+  border-radius: 18px;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid rgba(212, 175, 55, 0.12);
+  box-shadow: 
+    0 6px 18px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.35s ease;
+  box-sizing: border-box;
+  animation: fadeInUp 0.6s ease-out;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.timeline-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border-color: var(--gold);
+}
+
+.timeline-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.timeline-card ul {
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.timeline-card li + li {
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 992px) {
+  .timeline-section {
+    padding: 4rem 0 3rem;
+  }
+  .timeline-section__timeline {
+    gap: 0.6rem;
+  }
+  .timeline-section__period-btn,
+  .period-btn {
+    padding: 0.75rem 1.75rem;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-section {
+    padding: 3rem 0 2.5rem;
+  }
+  .timeline-section__timeline {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .timeline-section__period-btn,
+  .period-btn {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-section {
+    padding: 2.5rem 0 2rem;
+  }
+  .timeline-section__timeline {
+    gap: 0.4rem;
+  }
+  .timeline-section__period-btn,
+  .period-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
+}
+
