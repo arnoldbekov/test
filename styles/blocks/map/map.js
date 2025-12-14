@@ -233,6 +233,9 @@ function setupMapTooltips(mapElement, tooltipId) {
     if (evt.target.closest('.tooltip-details-btn') || evt.target.classList.contains('tooltip-details-btn')) {
       return;
     }
+    if (tooltip.contains(evt.target)) {
+      return;
+    }
     const zone = evt.target.closest('.map-zone');
     if (!zone) {
       if (!tooltip.contains(evt.target)) {
@@ -244,13 +247,14 @@ function setupMapTooltips(mapElement, tooltipId) {
     if (place) {
       showTooltip(zone, place, true);
     }
-  });
+  }, true);
 
   tooltip.addEventListener('click', (evt) => {
     if (evt.target.closest('.tooltip-details-btn') || evt.target.classList.contains('tooltip-details-btn')) {
-      evt.stopPropagation();
+      return;
     }
-  });
+    evt.stopPropagation();
+  }, true);
 
   mapWrapper.addEventListener('click', (evt) => {
     if (evt.target.closest('.tooltip-details-btn') || evt.target.classList.contains('tooltip-details-btn')) {
@@ -259,7 +263,7 @@ function setupMapTooltips(mapElement, tooltipId) {
     if (!tooltip.contains(evt.target) && !evt.target.closest('.map-zone')) {
       hideTooltip(true);
     }
-  });
+  }, true);
 }
 
 function setupMapInteractionsRoutes() {
@@ -766,6 +770,9 @@ function setupMapTooltipsForModal() {
     if (evt.target.closest('.tooltip-details-btn') || evt.target.classList.contains('tooltip-details-btn')) {
       return;
     }
+    if (tooltip.contains(evt.target)) {
+      return;
+    }
     const zone = evt.target.closest('.map-zone');
     if (!zone) {
       if (!tooltip.contains(evt.target)) {
@@ -777,13 +784,14 @@ function setupMapTooltipsForModal() {
     if (place) {
       showTooltip(zone, place, true);
     }
-  });
+  }, true);
 
   tooltip.addEventListener('click', (evt) => {
     if (evt.target.closest('.tooltip-details-btn') || evt.target.classList.contains('tooltip-details-btn')) {
-      evt.stopPropagation();
+      return;
     }
-  });
+    evt.stopPropagation();
+  }, true);
 
   mapWrapper.addEventListener('click', (evt) => {
     if (!tooltip.contains(evt.target) && !evt.target.closest('.map-zone')) {
