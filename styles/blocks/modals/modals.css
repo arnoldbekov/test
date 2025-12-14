@@ -185,12 +185,6 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-#routeModal .route-checklist::-webkit-scrollbar { width: 10px; }
-#routeModal .route-checklist::-webkit-scrollbar-track { background: rgba(247, 240, 221, 0.6); border-radius: 6px; }
-#routeModal .route-checklist::-webkit-scrollbar-thumb {
-  background: rgba(212, 175, 55, 0.55);
-  border-radius: 6px;
-}
 
 #routeModal .route-name-label {
   font-weight: 700;
@@ -252,16 +246,6 @@
   max-height: 88vh;
 }
 
-.modal-dialog::-webkit-scrollbar { width: 10px; }
-.modal-dialog::-webkit-scrollbar-track { background: rgba(247, 240, 221, 0.6); border-radius: 6px; }
-.modal-dialog::-webkit-scrollbar-thumb {
-  background: rgba(212, 175, 55, 0.55);
-  border-radius: 6px;
-  border: 2px solid rgba(255, 255, 255, 0.6);
-}
-.modal-dialog::-webkit-scrollbar-thumb:hover {
-  background: rgba(212, 175, 55, 0.75);
-}
 
 .modal-dialog .object-details dt {
   font-weight: 700;
