@@ -474,14 +474,10 @@
     gap: 1.5rem;
   }
   .map-and-list .map-wrapper {
-    height: calc(100vh - 200px);
-    min-height: 400px;
-    max-height: 80vh;
+    height: 400px;
   }
   .map-and-list .objects-grid {
-    max-height: calc(100vh - 200px);
-    min-height: 400px;
-    max-height: 80vh;
+    max-height: 400px;
     overflow-y: auto;
   }
   .routes-section__premade,
@@ -534,14 +530,10 @@
     gap: 1rem;
   }
   .map-and-list .map-wrapper {
-    height: calc(100vh - 180px);
-    min-height: 350px;
-    max-height: 75vh;
+    height: 350px;
   }
   .map-and-list .objects-grid {
-    max-height: calc(100vh - 180px);
-    min-height: 350px;
-    max-height: 75vh;
+    max-height: 350px;
     overflow-y: auto;
   }
   .routes-section__premade,

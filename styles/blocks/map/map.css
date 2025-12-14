@@ -124,9 +124,7 @@ body:has(#pmrMapRoutes) .map-section__wrapper {
 }
 
 body:has(#pmrMapRoutes) .map-and-list .map-wrapper {
-  height: calc(100vh - 300px);
-  min-height: 600px;
-  max-height: 90vh;
+  height: 600px;
 }
 
 #pmrMap {
@@ -155,16 +153,12 @@ body:has(#pmrMapRoutes) .map-and-list .map-wrapper {
 }
 
 .map-and-list .map-wrapper {
-  height: calc(100vh - 300px);
-  min-height: 600px;
-  max-height: 90vh;
+  height: 600px;
   margin-bottom: 0;
 }
 
 .map-and-list .objects-grid {
-  max-height: calc(100vh - 300px);
-  min-height: 600px;
-  max-height: 90vh;
+  max-height: 600px;
   overflow-y: auto;
 }
 
@@ -441,9 +435,7 @@ body:has(#pmrMapRoutes) .map__wrapper {
 
 body:has(#pmrMapRoutes) .map-and-list .map-wrapper,
 body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
-  height: calc(100vh - 300px);
-  min-height: 600px;
-  max-height: 90vh;
+  height: 600px;
 }
 
 .map-controls,
@@ -683,14 +675,10 @@ body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
     gap: 1.5rem;
   }
   .map-and-list .map-wrapper {
-    height: calc(100vh - 250px);
-    min-height: 500px;
-    max-height: 85vh;
+    height: 450px;
   }
   .map-and-list .objects-grid {
-    max-height: calc(100vh - 250px);
-    min-height: 500px;
-    max-height: 85vh;
+    max-height: 450px;
     overflow-y: auto;
   }
   .map-tooltip,
@@ -728,14 +716,10 @@ body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
     gap: 1.5rem;
   }
   .map-and-list .map-wrapper {
-    height: calc(100vh - 250px);
-    min-height: 500px;
-    max-height: 85vh;
+    height: 450px;
   }
   .map-and-list .objects-grid {
-    max-height: calc(100vh - 250px);
-    min-height: 500px;
-    max-height: 85vh;
+    max-height: 450px;
     overflow-y: auto;
   }
 }
@@ -766,14 +750,10 @@ body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
     gap: 1.5rem;
   }
   .map-and-list .map-wrapper {
-    height: calc(100vh - 200px);
-    min-height: 400px;
-    max-height: 80vh;
+    height: 400px;
   }
   .map-and-list .objects-grid {
-    max-height: calc(100vh - 200px);
-    min-height: 400px;
-    max-height: 80vh;
+    max-height: 400px;
     overflow-y: auto;
   }
   .map-tooltip,
@@ -853,14 +833,10 @@ body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
     gap: 1rem;
   }
   .map-and-list .map-wrapper {
-    height: calc(100vh - 180px);
-    min-height: 350px;
-    max-height: 75vh;
+    height: 350px;
   }
   .map-and-list .objects-grid {
-    max-height: calc(100vh - 180px);
-    min-height: 350px;
-    max-height: 75vh;
+    max-height: 350px;
     overflow-y: auto;
   }
   .map-tooltip,

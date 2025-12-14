@@ -227,8 +227,9 @@ function setupMapTooltips(mapElement, tooltipId) {
       return;
     }
     const place = appState.places.find(p => p.id === Number(zone.dataset.id));
-    if (place) {
-      showTooltip(zone, place, true);
+    if (place && typeof window.openObjectModal === 'function') {
+      hideTooltip(true);
+      window.openObjectModal(place);
     }
   });
 
@@ -752,8 +753,9 @@ function setupMapTooltipsForModal() {
       return;
     }
     const place = appState.places.find(p => p.id === Number(zone.dataset.id));
-    if (place) {
-      showTooltip(zone, place, true);
+    if (place && typeof window.openObjectModal === 'function') {
+      hideTooltip(true);
+      window.openObjectModal(place);
     }
   });
 
