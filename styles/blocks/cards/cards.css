@@ -493,6 +493,82 @@
   justify-content: center;
 }
 
+@media (max-width: 992px) {
+  .favorites .gallery-card,
+  .favorites .object-card.gallery-card {
+    min-height: 360px;
+  }
+  .favorites .gallery-thumb,
+  .favorites .gallery-thumb img,
+  .favorites .gallery-card img,
+  .favorites .object-card.gallery-card img {
+    height: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .favorites .gallery-card,
+  .favorites .object-card.gallery-card {
+    min-height: 340px;
+  }
+  .favorites .gallery-thumb,
+  .favorites .gallery-thumb img,
+  .favorites .gallery-card img,
+  .favorites .object-card.gallery-card img {
+    height: 200px;
+  }
+  .favorites .gallery-card h3,
+  .favorites .object-card.gallery-card h3,
+  .favorites .gallery-section__card-title,
+  .favorites .object-card__title.gallery-section__card-title {
+    font-size: 1rem;
+    padding: 1rem 1.25rem 0.3rem 1.25rem;
+  }
+  .favorites .gallery-card p,
+  .favorites .object-card.gallery-card p,
+  .favorites .gallery-section__card-description,
+  .favorites .object-card__description.gallery-section__card-description {
+    font-size: 0.9rem;
+    padding: 0 1.25rem 1rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .favorites .gallery-card,
+  .favorites .object-card.gallery-card {
+    min-height: 320px;
+  }
+  .favorites .gallery-thumb,
+  .favorites .gallery-thumb img,
+  .favorites .gallery-card img,
+  .favorites .object-card.gallery-card img {
+    height: 180px;
+  }
+  .favorites .gallery-card h3,
+  .favorites .object-card.gallery-card h3,
+  .favorites .gallery-section__card-title,
+  .favorites .object-card__title.gallery-section__card-title {
+    font-size: 0.95rem;
+    padding: 0.9rem 1rem 0.25rem 1rem;
+  }
+  .favorites .gallery-card p,
+  .favorites .object-card.gallery-card p,
+  .favorites .gallery-section__card-description,
+  .favorites .object-card__description.gallery-section__card-description {
+    font-size: 0.85rem;
+    padding: 0 1rem 0.9rem 1rem;
+  }
+  .favorites .gallery-card .btn-secondary,
+  .favorites .object-card.gallery-card .btn-secondary {
+    margin: 0 1rem 0.9rem 1rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 /* Legacy support - keep old classes for backward compatibility */
 .objects__grid {
   display: grid;
