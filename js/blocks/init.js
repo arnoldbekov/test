@@ -1,7 +1,7 @@
 import { appState } from '../common/data.js';
 import { setupTimeline, renderTimelineEvents } from '../../styles/blocks/timeline/timeline.js';
 import { setupSearch, applyFilters } from './search.js';
-import { setupMapInteractions, setupMapInteractionsRoutes, setupHideMapButton, setupMapModal } from '../../styles/blocks/map/map.js';
+import { setupMapInteractions, setupMapInteractionsRoutes, setupHideMapButton, setupMapModal, setupMapModalRoutes } from '../../styles/blocks/map/map.js';
 import { setupModals } from '../../styles/blocks/modals/modals.js';
 import { buildStats } from '../../styles/blocks/stats/stats.js';
 import { buildGallery } from '../../styles/blocks/gallery/gallery.js';
@@ -15,6 +15,7 @@ function initApp() {
   if (typeof window.setupMapInteractions === 'function') window.setupMapInteractions();
   if (typeof window.setupMapInteractionsRoutes === 'function') window.setupMapInteractionsRoutes();
   if (typeof window.setupMapModal === 'function') window.setupMapModal();
+  if (typeof window.setupMapModalRoutes === 'function') window.setupMapModalRoutes();
   if (typeof window.setupRoutes === 'function') window.setupRoutes();
   if (typeof window.setupModals === 'function') window.setupModals();
   if (typeof window.renderTimelineEvents === 'function') window.renderTimelineEvents();

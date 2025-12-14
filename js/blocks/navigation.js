@@ -106,26 +106,95 @@ function initMobileMenu() {
   // Close menu when clicking on a link
   const navLinks = mainNav.querySelectorAll('.header__nav-link');
   navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      toggleMenu(false);
-    });
+    let touchStartTime = 0;
+    let touchStartTarget = null;
+    
+    // Handle touch events first
+    link.addEventListener('touchstart', (e) => {
+      touchStartTime = Date.now();
+      touchStartTarget = e.target;
+      link.dataset.touching = 'true';
+      // Don't prevent default - allow navigation
+    }, { passive: true });
+    
     link.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      toggleMenu(false);
+      const touchDuration = Date.now() - touchStartTime;
+      const isSameTarget = e.target === touchStartTarget || e.target.closest('a') === link;
+      
+      if (touchDuration < 300 && isSameTarget) {
+        // This is a tap, not a scroll
+        e.stopPropagation();
+        const href = link.getAttribute('href');
+        if (href && href !== '#') {
+          if (href.startsWith('#')) {
+            toggleMenu(false);
+            // Allow default navigation
+          } else {
+            toggleMenu(false);
+            // Allow default navigation
+          }
+        } else {
+          toggleMenu(false);
+        }
+      }
+      delete link.dataset.touching;
+      touchStartTime = 0;
+      touchStartTarget = null;
     }, { passive: false });
+    
+    // Use click event as fallback
+    link.addEventListener('click', (e) => {
+      // Don't prevent default - allow navigation
+      const href = link.getAttribute('href');
+      if (href && href !== '#') {
+        // For same-page anchors, close immediately
+        if (href.startsWith('#')) {
+          toggleMenu(false);
+        } else {
+          // For external links, close after a short delay
+          setTimeout(() => {
+            toggleMenu(false);
+          }, 50);
+        }
+      } else {
+        toggleMenu(false);
+      }
+    }, { passive: true });
   });
   
   // Close menu when clicking outside
   const handleOutsideClick = (e) => {
-    if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+    // Don't close if clicking on a link or if we just touched a link
+    const clickedLink = e.target.closest('.header__nav-link');
+    if (clickedLink || clickedLink?.dataset.touching === 'true') {
+      return;
+    }
+    // Don't close if clicking on the toggle button
+    if (menuToggle.contains(e.target)) {
+      return;
+    }
+    // Only close if clicking outside the menu
+    if (!mainNav.contains(e.target)) {
       if (mainNav.classList.contains('menu-open')) {
         toggleMenu(false);
       }
     }
   };
   
-  document.addEventListener('click', handleOutsideClick);
-  document.addEventListener('touchend', handleOutsideClick);
+  // Use mousedown instead of click for better mobile support
+  document.addEventListener('mousedown', handleOutsideClick);
+  document.addEventListener('touchstart', (e) => {
+    // Only handle if not touching a link
+    const clickedLink = e.target.closest('.header__nav-link');
+    if (!clickedLink || clickedLink.dataset.touching !== 'true') {
+      // Small delay to let link handlers run first
+      setTimeout(() => {
+        if (!clickedLink || clickedLink.dataset.touching !== 'true') {
+          handleOutsideClick(e);
+        }
+      }, 10);
+    }
+  }, { passive: true });
   
   // Close menu on escape key
   document.addEventListener('keydown', (e) => {
