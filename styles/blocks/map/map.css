@@ -143,6 +143,10 @@ body:has(#pmrMapRoutes) .map-and-list .map-wrapper {
   object-fit: contain;
   max-width: 100%;
   max-height: 100%;
+  touch-action: pan-x pan-y pinch-zoom;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .map-and-list {
@@ -743,8 +747,9 @@ body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
   .map-wrapper,
   .map__wrapper {
     overflow: visible;
-    touch-action: pan-x pan-y;
+    touch-action: pan-x pan-y pinch-zoom;
     position: relative;
+    -webkit-overflow-scrolling: touch;
   }
   .map-and-list {
     grid-template-columns: 1fr;

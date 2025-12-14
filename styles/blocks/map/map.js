@@ -25,12 +25,14 @@ function setupMapInteractions() {
   function smoothZoom(targetScale, centerX, centerY) {
     const newScale = Math.min(maxScale, Math.max(minScale, targetScale));
     if (!content || newScale === scale) return;
+    const rect = map.getBoundingClientRect();
     const pt = map.createSVGPoint();
     pt.x = centerX;
     pt.y = centerY;
     const svgP = pt.matrixTransform(map.getScreenCTM().inverse());
-    translateX = svgP.x - (svgP.x - translateX) * (newScale / scale);
-    translateY = svgP.y - (svgP.y - translateY) * (newScale / scale);
+    const scaleRatio = newScale / scale;
+    translateX = svgP.x - (svgP.x - translateX) * scaleRatio;
+    translateY = svgP.y - (svgP.y - translateY) * scaleRatio;
     scale = newScale;
     applyTransform();
   }
@@ -57,24 +59,60 @@ function setupMapInteractions() {
 
   window.addEventListener('mouseup', () => { isPanning = false; });
 
+  let touchStartDistance = 0;
+  let touchStartScale = 1;
+  let lastTouchTime = 0;
+
   map.addEventListener('touchstart', evt => {
-    if (evt.touches.length !== 1) return;
-    const t = evt.touches[0];
-    isPanning = true;
-    startX = t.clientX - translateX;
-    startY = t.clientY - translateY;
-  }, { passive: false });
+    if (evt.touches.length === 2) {
+      const touch1 = evt.touches[0];
+      const touch2 = evt.touches[1];
+      touchStartDistance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
+      touchStartScale = scale;
+      isPanning = false;
+    } else if (evt.touches.length === 1) {
+      const t = evt.touches[0];
+      const now = Date.now();
+      if (now - lastTouchTime < 300) {
+        return;
+      }
+      isPanning = true;
+      startX = t.clientX - translateX;
+      startY = t.clientY - translateY;
+    }
+  }, { passive: true });
 
   map.addEventListener('touchmove', evt => {
-    if (!isPanning || evt.touches.length !== 1) return;
-    const t = evt.touches[0];
-    translateX = t.clientX - startX;
-    translateY = t.clientY - startY;
-    applyTransform();
-    evt.preventDefault();
+    if (evt.touches.length === 2) {
+      evt.preventDefault();
+      const touch1 = evt.touches[0];
+      const touch2 = evt.touches[1];
+      const distance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
+      const newScale = touchStartScale * (distance / touchStartDistance);
+      const rect = map.getBoundingClientRect();
+      const centerX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
+      const centerY = (touch1.clientY + touch2.clientY) / 2 - rect.top;
+      smoothZoom(newScale, centerX, centerY);
+    } else if (isPanning && evt.touches.length === 1) {
+      const t = evt.touches[0];
+      translateX = t.clientX - startX;
+      translateY = t.clientY - startY;
+      applyTransform();
+      evt.preventDefault();
+    }
   }, { passive: false });
 
-  map.addEventListener('touchend', () => { isPanning = false; });
+  map.addEventListener('touchend', (evt) => {
+    if (evt.touches.length === 0) {
+      isPanning = false;
+      lastTouchTime = Date.now();
+    } else if (evt.touches.length === 1) {
+      isPanning = true;
+      const t = evt.touches[0];
+      startX = t.clientX - translateX;
+      startY = t.clientY - translateY;
+    }
+  });
 
   const zoomInBtn = document.getElementById('zoomInBtn');
   const zoomOutBtn = document.getElementById('zoomOutBtn');
@@ -326,24 +364,60 @@ function setupMapInteractionsRoutes() {
     map.style.cursor = '';
   });
 
+  let touchStartDistance = 0;
+  let touchStartScale = 1;
+  let lastTouchTime = 0;
+
   map.addEventListener('touchstart', evt => {
-    if (evt.touches.length !== 1) return;
-    const t = evt.touches[0];
-    isPanning = true;
-    startX = t.clientX - translateX;
-    startY = t.clientY - translateY;
-  }, { passive: false });
+    if (evt.touches.length === 2) {
+      const touch1 = evt.touches[0];
+      const touch2 = evt.touches[1];
+      touchStartDistance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
+      touchStartScale = scale;
+      isPanning = false;
+    } else if (evt.touches.length === 1) {
+      const t = evt.touches[0];
+      const now = Date.now();
+      if (now - lastTouchTime < 300) {
+        return;
+      }
+      isPanning = true;
+      startX = t.clientX - translateX;
+      startY = t.clientY - translateY;
+    }
+  }, { passive: true });
 
   map.addEventListener('touchmove', evt => {
-    if (!isPanning || evt.touches.length !== 1) return;
-    const t = evt.touches[0];
-    translateX = t.clientX - startX;
-    translateY = t.clientY - startY;
-    applyTransform();
-    evt.preventDefault();
+    if (evt.touches.length === 2) {
+      evt.preventDefault();
+      const touch1 = evt.touches[0];
+      const touch2 = evt.touches[1];
+      const distance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
+      const newScale = touchStartScale * (distance / touchStartDistance);
+      const rect = map.getBoundingClientRect();
+      const centerX = (touch1.clientX + touch2.clientX) / 2 - rect.left;
+      const centerY = (touch1.clientY + touch2.clientY) / 2 - rect.top;
+      smoothZoom(newScale, centerX, centerY);
+    } else if (isPanning && evt.touches.length === 1) {
+      const t = evt.touches[0];
+      translateX = t.clientX - startX;
+      translateY = t.clientY - startY;
+      applyTransform();
+      evt.preventDefault();
+    }
   }, { passive: false });
 
-  map.addEventListener('touchend', () => { isPanning = false; });
+  map.addEventListener('touchend', (evt) => {
+    if (evt.touches.length === 0) {
+      isPanning = false;
+      lastTouchTime = Date.now();
+    } else if (evt.touches.length === 1) {
+      isPanning = true;
+      const t = evt.touches[0];
+      startX = t.clientX - translateX;
+      startY = t.clientY - translateY;
+    }
+  });
 
   const zoomInBtn = document.getElementById('zoomInBtnRoutes');
   const zoomOutBtn = document.getElementById('zoomOutBtnRoutes');
@@ -503,13 +577,9 @@ function setupMapInteractionsForModal() {
     pt.x = centerX;
     pt.y = centerY;
     const svgP = pt.matrixTransform(map.getScreenCTM().inverse());
-    const scaleFactor = newScale / scale;
-    // Calculate the point in SVG coordinates before transform
-    const currentX = (svgP.x - translateX) / scale;
-    const currentY = (svgP.y - translateY) / scale;
-    // Calculate new translate to keep the same point under the cursor
-    translateX = svgP.x - currentX * newScale;
-    translateY = svgP.y - currentY * newScale;
+    const scaleRatio = newScale / scale;
+    translateX = svgP.x - (svgP.x - translateX) * scaleRatio;
+    translateY = svgP.y - (svgP.y - translateY) * scaleRatio;
     scale = newScale;
     applyTransform();
   }

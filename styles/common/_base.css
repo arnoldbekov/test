@@ -275,5 +275,69 @@ p {
     max-height: calc(100vh - 150px);
     min-height: 300px;
   }
+  .header__nav {
+    height: 100vh;
+    height: 100dvh;
+  }
+}
+
+@media (max-width: 320px) {
+  .container {
+    padding: 0 8px;
+  }
+  h1 { font-size: 1.4rem; }
+  h2 { font-size: 1.2rem; }
+  h3 { font-size: 1rem; }
+  h4 { font-size: 0.9rem; }
+  .section-lead {
+    font-size: 0.85rem;
+  }
+  .btn-primary, .btn-secondary {
+    font-size: 0.75rem;
+    padding: 0.6rem 1rem;
+  }
+  .header__nav {
+    width: 90%;
+    max-width: 260px;
+    padding: 4rem 1.25rem 1.5rem;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .container {
+    padding: 0 16px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .container {
+    padding: 0 24px;
+  }
+}
+
+@media (pointer: coarse) {
+  button, a, .header__menu-toggle {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .header__menu-toggle {
+    padding: 8px;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .header__nav-link:hover {
+    padding-left: 0;
+  }
+  .header__nav-link:active {
+    color: var(--gold);
+    padding-left: 0.5rem;
+  }
 }
 

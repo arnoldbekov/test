@@ -76,47 +76,61 @@ function initMobileMenu() {
   
   if (!menuToggle || !mainNav) return;
   
-  menuToggle.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const toggleMenu = (open) => {
+    menuToggle.setAttribute('aria-expanded', String(open));
+    mainNav.setAttribute('aria-expanded', String(open));
+    if (open) {
+      mainNav.classList.add('menu-open');
+      document.body.style.overflow = 'hidden';
+    } else {
+      mainNav.classList.remove('menu-open');
+      document.body.style.overflow = '';
+    }
+  };
+  
+  const handleToggle = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-    const newState = !isExpanded;
-    menuToggle.setAttribute('aria-expanded', String(newState));
-    mainNav.setAttribute('aria-expanded', String(newState));
-    mainNav.classList.toggle('menu-open', newState);
-    document.body.style.overflow = newState ? 'hidden' : '';
-  });
+    toggleMenu(!isExpanded);
+  };
+  
+  menuToggle.addEventListener('click', handleToggle);
+  menuToggle.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    handleToggle(e);
+  }, { passive: false });
   
   // Close menu when clicking on a link
   const navLinks = mainNav.querySelectorAll('.header__nav-link');
   navLinks.forEach(link => {
     link.addEventListener('click', () => {
-      menuToggle.setAttribute('aria-expanded', 'false');
-      mainNav.setAttribute('aria-expanded', 'false');
-      mainNav.classList.remove('menu-open');
-      document.body.style.overflow = '';
+      toggleMenu(false);
     });
+    link.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleMenu(false);
+    }, { passive: false });
   });
   
   // Close menu when clicking outside
-  document.addEventListener('click', (e) => {
+  const handleOutsideClick = (e) => {
     if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
       if (mainNav.classList.contains('menu-open')) {
-        menuToggle.setAttribute('aria-expanded', 'false');
-        mainNav.setAttribute('aria-expanded', 'false');
-        mainNav.classList.remove('menu-open');
-        document.body.style.overflow = '';
+        toggleMenu(false);
       }
     }
-  });
+  };
+  
+  document.addEventListener('click', handleOutsideClick);
+  document.addEventListener('touchend', handleOutsideClick);
   
   // Close menu on escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mainNav.classList.contains('menu-open')) {
-      menuToggle.setAttribute('aria-expanded', 'false');
-      mainNav.setAttribute('aria-expanded', 'false');
-      mainNav.classList.remove('menu-open');
-      document.body.style.overflow = '';
+      toggleMenu(false);
     }
   });
 }

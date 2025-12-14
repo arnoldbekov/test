@@ -469,6 +469,10 @@
 }
 
 #pmrMapModal {
+  touch-action: pan-x pan-y pinch-zoom;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
   width: 100%;
   height: 100%;
   display: block;
