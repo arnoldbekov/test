@@ -6,6 +6,9 @@
   padding: 5rem 0 8rem;
   position: relative;
   overflow: hidden;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 .hero::before {
@@ -19,6 +22,8 @@
   border-radius: 50%;
   animation: float 20s ease-in-out infinite;
   z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 .hero::after {
@@ -32,6 +37,8 @@
   border-radius: 50%;
   animation: float 15s ease-in-out infinite reverse;
   z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 .hero > .container {
@@ -45,6 +52,9 @@
   gap: 3rem;
   align-items: center;
   animation: fadeInUp 0.8s ease-out;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .hero__grid > .hero__content:first-child {

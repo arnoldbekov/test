@@ -5,6 +5,9 @@
   padding: 3rem 0;
   position: relative;
   background: linear-gradient(180deg, rgba(255, 250, 240, 0.5) 0%, var(--beige) 100%);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .map-section::after {

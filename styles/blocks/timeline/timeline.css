@@ -8,6 +8,9 @@
   border-top: 1px solid var(--border-soft);
   border-bottom: 1px solid var(--border-soft);
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .timeline-section::before {
