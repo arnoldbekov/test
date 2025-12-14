@@ -202,6 +202,16 @@ function setupMapTooltips(mapElement, tooltipId) {
   tooltip.addEventListener('mouseleave', () => {
     hideTimeout = setTimeout(() => hideTooltip(), 100);
   });
+
+  if (tooltipBtn) {
+    tooltipBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentPlace && typeof window.openObjectModal === 'function') {
+        window.openObjectModal(currentPlace);
+        hideTooltip();
+      }
+    });
+  }
 }
 
 function setupMapInteractionsRoutes() {
@@ -597,14 +607,20 @@ function setupMapTooltipsForModal() {
   const tooltipTitle = tooltip.querySelector('.tooltip-title');
   const tooltipDescription = tooltip.querySelector('.tooltip-description');
   const tooltipImage = tooltip.querySelector('.tooltip-image');
+  const tooltipBtn = tooltip.querySelector('.tooltip-btn');
   const zones = map.querySelectorAll('.map-zone');
+  let currentPlace = null;
 
   function showTooltip(zone) {
     const place = appState.places.find(p => p.id === Number(zone.dataset.id));
     if (!place) return;
+    currentPlace = place;
     tooltipTitle.textContent = place.name;
     const descriptionText = place.short || '';
     tooltipDescription.textContent = descriptionText.length > 50 ? descriptionText.substring(0, 50) + '...' : descriptionText;
+    if (tooltipBtn) {
+      tooltipBtn.dataset.tooltipId = place.id;
+    }
     if (place.images && place.images.now) {
       tooltipImage.src = normalizeImagePath(place.images.now);
       tooltipImage.alt = place.name;
@@ -617,6 +633,16 @@ function setupMapTooltipsForModal() {
 
   function hideTooltip() {
     tooltip.setAttribute('aria-hidden', 'true');
+  }
+
+  if (tooltipBtn) {
+    tooltipBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentPlace && typeof window.openObjectModal === 'function') {
+        window.openObjectModal(currentPlace);
+        hideTooltip();
+      }
+    });
   }
 
   zones.forEach(zone => {

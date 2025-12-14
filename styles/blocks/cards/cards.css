@@ -356,7 +356,7 @@
 /* Favorites section modifier */
 .favorites .object-card,
 .favorites .gallery-card {
-  min-height: 320px;
+  min-height: 280px;
   padding-bottom: 0.75rem;
 }
 

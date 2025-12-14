@@ -518,6 +518,11 @@ body:has(#pmrMapRoutes) .map__wrapper {
   width: fit-content;
 }
 
+.map-tooltip[aria-hidden="false"],
+.map__tooltip[aria-hidden="false"] {
+  pointer-events: auto;
+}
+
 .tooltip-content {
   background: rgba(255, 255, 255, 0.98);
   border-radius: 12px;
