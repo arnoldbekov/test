@@ -76,12 +76,15 @@ function initMobileMenu() {
   
   if (!menuToggle || !mainNav) return;
   
-  menuToggle.addEventListener('click', () => {
+  menuToggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-    menuToggle.setAttribute('aria-expanded', !isExpanded);
-    mainNav.setAttribute('aria-expanded', !isExpanded);
-    mainNav.classList.toggle('menu-open');
-    document.body.style.overflow = !isExpanded ? 'hidden' : '';
+    const newState = !isExpanded;
+    menuToggle.setAttribute('aria-expanded', String(newState));
+    mainNav.setAttribute('aria-expanded', String(newState));
+    mainNav.classList.toggle('menu-open', newState);
+    document.body.style.overflow = newState ? 'hidden' : '';
   });
   
   // Close menu when clicking on a link
@@ -104,6 +107,16 @@ function initMobileMenu() {
         mainNav.classList.remove('menu-open');
         document.body.style.overflow = '';
       }
+    }
+  });
+  
+  // Close menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mainNav.classList.contains('menu-open')) {
+      menuToggle.setAttribute('aria-expanded', 'false');
+      mainNav.setAttribute('aria-expanded', 'false');
+      mainNav.classList.remove('menu-open');
+      document.body.style.overflow = '';
     }
   });
 }
