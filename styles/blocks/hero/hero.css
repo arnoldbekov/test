@@ -32,8 +32,6 @@
   border-radius: 50%;
   animation: float 15s ease-in-out infinite reverse;
   z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
 }
 
 .hero > .container {

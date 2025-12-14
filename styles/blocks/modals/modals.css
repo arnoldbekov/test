@@ -39,9 +39,29 @@
   padding: 2rem;
   position: relative;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.2);
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   transform: scale(0.9) translateY(20px);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal__dialog::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal__dialog::-webkit-scrollbar-track {
+  background: rgba(247, 240, 221, 0.6);
+  border-radius: 6px;
+}
+
+.modal__dialog::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.55);
+  border-radius: 6px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.modal__dialog::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.75);
 }
 
 .modal__dialog .object-details,
@@ -228,9 +248,29 @@
   padding: 2rem;
   position: relative;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.2);
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   transform: scale(0.9) translateY(20px);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-dialog::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-dialog::-webkit-scrollbar-track {
+  background: rgba(247, 240, 221, 0.6);
+  border-radius: 6px;
+}
+
+.modal-dialog::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.55);
+  border-radius: 6px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.modal-dialog::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.75);
 }
 
 .modal-dialog .object-details,
