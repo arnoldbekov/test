@@ -31,10 +31,6 @@ html {
   box-sizing: border-box;
 }
 
-main, section, header, footer {
-  max-width: 100%;
-  overflow-x: hidden;
-}
 
 body {
   font-family: 'Lora', serif;
