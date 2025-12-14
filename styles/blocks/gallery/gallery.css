@@ -82,7 +82,6 @@
   line-height: 1.3;
   margin: 0;
   color: var(--text);
-  flex-shrink: 0;
 }
 
 .gallery-section__card-description {
@@ -90,7 +89,6 @@
   color: var(--muted);
   margin: 0;
   flex: 1;
-  flex-shrink: 0;
 }
 
 .gallery-section__card .btn-secondary {
@@ -187,8 +185,6 @@
   height: 240px;
   overflow: hidden;
   flex-shrink: 0;
-  margin: 0;
-  padding: 0;
 }
 
 .gallery-thumb img {
@@ -198,11 +194,6 @@
   display: block;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-  position: relative;
-  top: 0;
-  left: 0;
-  margin: 0;
-  padding: 0;
 }
 
 .gallery-card:hover .gallery-thumb img,
@@ -245,7 +236,6 @@
   line-height: 1.3;
   margin: 0;
   color: var(--text);
-  flex-shrink: 0;
 }
 
 .gallery-card p {
@@ -253,7 +243,6 @@
   color: var(--muted);
   margin: 0;
   flex: 1;
-  flex-shrink: 0;
 }
 
 .gallery-card .btn-secondary {
@@ -268,18 +257,16 @@
 }
 
 @media (max-width: 992px) {
-  .gallery-section__grid,
   .gallery__grid,
   .gallery-grid {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.5rem;
   }
-  .gallery-section__card,
   .gallery-card {
     min-height: 360px;
   }
-  .gallery-section__card-image,
   .gallery-thumb,
+  .gallery-thumb img,
   .gallery-card img {
     height: 220px;
   }
@@ -289,27 +276,23 @@
   .gallery-section {
     padding: 3rem 0 2rem;
   }
-  .gallery-section__grid,
   .gallery__grid,
   .gallery-grid {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 1.25rem;
   }
-  .gallery-section__card,
   .gallery-card {
     min-height: 340px;
   }
-  .gallery-section__card-image,
   .gallery-thumb,
+  .gallery-thumb img,
   .gallery-card img {
     height: 200px;
   }
-  .gallery-section__card-title,
   .gallery-card h3 {
     font-size: 1rem;
     padding: 1rem 1.25rem 0.3rem 1.25rem;
   }
-  .gallery-section__card-description,
   .gallery-card p {
     font-size: 0.9rem;
     padding: 0 1.25rem 1rem 1.25rem;
@@ -317,32 +300,27 @@
 }
 
 @media (max-width: 480px) {
-  .gallery-section__grid,
   .gallery__grid,
   .gallery-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  .gallery-section__card,
   .gallery-card {
     min-height: 320px;
   }
-  .gallery-section__card-image,
   .gallery-thumb,
+  .gallery-thumb img,
   .gallery-card img {
     height: 180px;
   }
-  .gallery-section__card-title,
   .gallery-card h3 {
     font-size: 0.95rem;
     padding: 0.9rem 1rem 0.25rem 1rem;
   }
-  .gallery-section__card-description,
   .gallery-card p {
     font-size: 0.85rem;
     padding: 0 1rem 0.9rem 1rem;
   }
-  .gallery-section__card .btn-secondary,
   .gallery-card .btn-secondary {
     margin: 0 1rem 0.9rem 1rem;
     padding: 0.4rem 0.8rem;
