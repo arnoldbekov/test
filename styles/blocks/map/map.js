@@ -168,21 +168,28 @@ function setupMapTooltips(mapElement, tooltipId) {
   }
 
   if (tooltipDetailsBtn) {
-    tooltipDetailsBtn.addEventListener('click', (e) => {
+    const handleDetailsClick = (e) => {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
-      if (currentPlace) {
+      const place = currentPlace;
+      if (place) {
         hideTooltip(true);
         setTimeout(() => {
           if (typeof window.openObjectModal === 'function') {
-            window.openObjectModal(currentPlace);
+            window.openObjectModal(place);
           } else {
             console.error('openObjectModal function not found');
           }
-        }, 100);
+        }, 50);
       }
-    });
+    };
+    
+    tooltipDetailsBtn.addEventListener('click', handleDetailsClick, true);
+    tooltipDetailsBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      handleDetailsClick(e);
+    }, true);
   }
 
   mapElement.addEventListener('mouseover', (evt) => {
@@ -694,21 +701,28 @@ function setupMapTooltipsForModal() {
   }
 
   if (tooltipDetailsBtn) {
-    tooltipDetailsBtn.addEventListener('click', (e) => {
+    const handleDetailsClick = (e) => {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
-      if (currentPlace) {
+      const place = currentPlace;
+      if (place) {
         hideTooltip(true);
         setTimeout(() => {
           if (typeof window.openObjectModal === 'function') {
-            window.openObjectModal(currentPlace);
+            window.openObjectModal(place);
           } else {
             console.error('openObjectModal function not found');
           }
-        }, 100);
+        }, 50);
       }
-    });
+    };
+    
+    tooltipDetailsBtn.addEventListener('click', handleDetailsClick, true);
+    tooltipDetailsBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      handleDetailsClick(e);
+    }, true);
   }
 
   map.addEventListener('mouseover', (evt) => {

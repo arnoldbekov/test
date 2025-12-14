@@ -124,7 +124,7 @@ body:has(#pmrMapRoutes) .map-section__wrapper {
 }
 
 body:has(#pmrMapRoutes) .map-and-list .map-wrapper {
-  height: 600px;
+  height: 800px;
 }
 
 #pmrMap {
@@ -153,12 +153,12 @@ body:has(#pmrMapRoutes) .map-and-list .map-wrapper {
 }
 
 .map-and-list .map-wrapper {
-  height: 600px;
+  height: 800px;
   margin-bottom: 0;
 }
 
 .map-and-list .objects-grid {
-  max-height: 600px;
+  max-height: 800px;
   overflow-y: auto;
 }
 
@@ -435,7 +435,7 @@ body:has(#pmrMapRoutes) .map__wrapper {
 
 body:has(#pmrMapRoutes) .map-and-list .map-wrapper,
 body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
-  height: 600px;
+  height: 800px;
 }
 
 .map-controls,
@@ -611,9 +611,10 @@ body:has(#pmrMapRoutes) .map-and-list .map__wrapper {
   margin-top: 0.5rem;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  pointer-events: auto;
+  pointer-events: auto !important;
   position: relative;
-  z-index: 20;
+  z-index: 100 !important;
+  display: block;
 }
 
 .tooltip-details-btn:hover,
