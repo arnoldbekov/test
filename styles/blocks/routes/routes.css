@@ -441,10 +441,10 @@
     gap: 1.5rem;
   }
   .map-and-list .map-wrapper {
-    height: 500px;
+    height: 450px;
   }
   .map-and-list .objects-grid {
-    max-height: 500px;
+    max-height: 450px;
     overflow-y: auto;
   }
   .routes-section__premade,
@@ -497,10 +497,10 @@
     gap: 1rem;
   }
   .map-and-list .map-wrapper {
-    height: 400px;
+    height: 350px;
   }
   .map-and-list .objects-grid {
-    max-height: 400px;
+    max-height: 350px;
     overflow-y: auto;
   }
   .routes-section__premade,
