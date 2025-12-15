@@ -499,7 +499,24 @@ function startStartPointSelection(options = {}) {
   selectedStartPointId = null;
   selectedStartPointCoords = null;
   isSelectingStartPoint = true;
-  const map = document.getElementById('pmrMap') || document.getElementById('pmrMapRoutes');
+  if (window.appState) {
+    window.appState.isSelectingStartPoint = true;
+    window.appState.selectedStartPointId = null;
+    window.appState.selectedStartPointCoords = null;
+  }
+
+  // Отдаём приоритет большой (модальной) карте, если она открыта,
+  // чтобы выбор точки всегда совпадал с тем, что пользователь видит в большом окне.
+  const modalMap = document.getElementById('pmrMapModal');
+  const modalRoutesMap = document.getElementById('pmrMapModalRoutes');
+  const isModalMapVisible = modalMap && modalMap.closest('.modal') && modalMap.closest('.modal').classList.contains('modal--visible');
+  const isModalRoutesVisible = modalRoutesMap && modalRoutesMap.closest('.modal') && modalRoutesMap.closest('.modal').classList.contains('modal--visible');
+
+  const baseMap = document.getElementById('pmrMap') || document.getElementById('pmrMapRoutes');
+  const map = (isModalMapVisible && modalMap) ||
+              (isModalRoutesVisible && modalRoutesMap) ||
+              baseMap;
+
   const modalMap = document.getElementById('pmrMapModal');
   const modalRoutesMap = document.getElementById('pmrMapModalRoutes');
   const mapSection = document.getElementById('map');
@@ -561,7 +578,13 @@ function getSVGCoordinates(map, evt) {
     const point = svg.createSVGPoint();
     point.x = evt.clientX;
     point.y = evt.clientY;
-    const content = svg.querySelector('#mapContent') || svg.querySelector('#mapContentRoutes');
+    // Берём матрицу трансформации именно у слоя с содержимым карты,
+    // чтобы координаты корректно учитывали зум и панорамирование
+    const content =
+      svg.querySelector('#mapContent') ||
+      svg.querySelector('#mapContentRoutes') ||
+      svg.querySelector('#mapContentModal') ||
+      svg.querySelector('#mapContentModalRoutes');
     const ctm = content ? content.getScreenCTM() : svg.getScreenCTM();
     if (!ctm) return null;
     const svgPoint = point.matrixTransform(ctm.inverse());
@@ -593,6 +616,11 @@ function setupStartPointMapClick(map, opts = {}) {
         selectedStartPointId = placeId;
         selectedStartPointCoords = null;
         isSelectingStartPoint = false;
+        if (window.appState) {
+          window.appState.isSelectingStartPoint = false;
+          window.appState.selectedStartPointId = placeId;
+          window.appState.selectedStartPointCoords = null;
+        }
         map.style.cursor = '';
         const hint = document.getElementById('startPointHint');
         if (hint) hint.remove();
@@ -618,7 +646,12 @@ function setupStartPointMapClick(map, opts = {}) {
       if (coords.x >= 0 && coords.x <= SVG_WIDTH && coords.y >= 0 && coords.y <= SVG_HEIGHT) {
         selectedStartPointId = null;
         selectedStartPointCoords = { x: Math.round(coords.x * 10) / 10, y: Math.round(coords.y * 10) / 10 };
-        isSelectingStartPoint = false;
+          isSelectingStartPoint = false;
+          if (window.appState) {
+            window.appState.isSelectingStartPoint = false;
+            window.appState.selectedStartPointId = null;
+            window.appState.selectedStartPointCoords = selectedStartPointCoords;
+          }
         map.style.cursor = '';
         map.removeEventListener('click', tempHandler);
         const hint = document.getElementById('startPointHint');
