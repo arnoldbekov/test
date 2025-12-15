@@ -517,8 +517,6 @@ function startStartPointSelection(options = {}) {
               (isModalRoutesVisible && modalRoutesMap) ||
               baseMap;
 
-  const modalMap = document.getElementById('pmrMapModal');
-  const modalRoutesMap = document.getElementById('pmrMapModalRoutes');
   const mapSection = document.getElementById('map');
   if (mapSection) {
     mapSection.style.display = 'block';
