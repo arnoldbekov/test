@@ -345,7 +345,11 @@ function setupMapInteractionsRoutes() {
   const content = document.getElementById('mapContentRoutes');
   const SVG_WIDTH = 1000;
   const SVG_HEIGHT = 700;
-  let scale = 1, minScale = 1, maxScale = 6, translateX = 0, translateY = 0, isPanning = false, startX = 0, startY = 0;
+  const shared = window.__routesMapTransform || { scale: 1, translateX: 0, translateY: 0 };
+  window.__routesMapTransform = shared;
+  let { scale, translateX, translateY } = shared;
+  const minScale = 1, maxScale = 6;
+  let isPanning = false, startX = 0, startY = 0;
 
   function clampTransform() {
     const minX = SVG_WIDTH * (1 - scale), maxX = 0, minY = SVG_HEIGHT * (1 - scale), maxY = 0;
@@ -355,18 +359,20 @@ function setupMapInteractionsRoutes() {
     if (translateY > maxY) translateY = maxY;
   }
 
-  function syncTransform() {
-    if (!content) return;
-    content.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`);
-    const modals = document.querySelectorAll('#mapContentModalRoutes');
-    modals.forEach(modalContent => {
-      modalContent.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`);
-    });
+  function syncTransformAll() {
+    shared.scale = scale;
+    shared.translateX = translateX;
+    shared.translateY = translateY;
+    const targets = [
+      document.getElementById('mapContentRoutes'),
+      document.getElementById('mapContentModalRoutes')
+    ].filter(Boolean);
+    targets.forEach(t => t.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`));
   }
 
   function applyTransform() {
     clampTransform();
-    syncTransform();
+    syncTransformAll();
   }
 
   function smoothZoom(newScale, centerX, centerY) {
@@ -1008,7 +1014,11 @@ function setupMapInteractionsForModalRoutes() {
   const content = document.getElementById('mapContentModalRoutes');
   const SVG_WIDTH = 1000;
   const SVG_HEIGHT = 700;
-  let scale = 1, minScale = 1, maxScale = 6, translateX = 0, translateY = 0, isPanning = false, startX = 0, startY = 0;
+  const shared = window.__routesMapTransform || { scale: 1, translateX: 0, translateY: 0 };
+  window.__routesMapTransform = shared;
+  let { scale, translateX, translateY } = shared;
+  const minScale = 1, maxScale = 6;
+  let isPanning = false, startX = 0, startY = 0;
 
   function clampTransform() {
     const minX = SVG_WIDTH * (1 - scale), maxX = 0, minY = SVG_HEIGHT * (1 - scale), maxY = 0;
@@ -1018,18 +1028,20 @@ function setupMapInteractionsForModalRoutes() {
     if (translateY > maxY) translateY = maxY;
   }
 
-  function syncTransform() {
-    if (!content) return;
-    content.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`);
-    const routesContent = document.querySelectorAll('#mapContentRoutes');
-    routesContent.forEach(mainContent => {
-      mainContent.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`);
-    });
+  function syncTransformAll() {
+    shared.scale = scale;
+    shared.translateX = translateX;
+    shared.translateY = translateY;
+    const targets = [
+      document.getElementById('mapContentRoutes'),
+      document.getElementById('mapContentModalRoutes')
+    ].filter(Boolean);
+    targets.forEach(t => t.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`));
   }
 
   function applyTransform() {
     clampTransform();
-    syncTransform();
+    syncTransformAll();
   }
 
   function smoothZoom(targetScale, centerX, centerY) {
