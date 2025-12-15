@@ -132,8 +132,6 @@ function setupMapInteractions() {
     applyTransform();
   });
 
-  // Click handler removed - now handled in setupMapTooltips
-
   setupMapTooltips(map, 'mapTooltip');
 }
 
@@ -472,22 +470,27 @@ function setupMapInteractionsRoutes() {
   const zoomInBtn = document.getElementById('zoomInBtnRoutes');
   const zoomOutBtn = document.getElementById('zoomOutBtnRoutes');
   const zoomResetBtn = document.getElementById('zoomResetBtnRoutes');
-  if (zoomInBtn) zoomInBtn.addEventListener('click', () => {
-    const rect = map.getBoundingClientRect();
-    smoothZoom(scale * 1.2, rect.left + rect.width / 2, rect.top + rect.height / 2);
-  });
-  if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => {
-    const rect = map.getBoundingClientRect();
-    smoothZoom(scale * 0.8, rect.left + rect.width / 2, rect.top + rect.height / 2);
-  });
-  if (zoomResetBtn) zoomResetBtn.addEventListener('click', () => {
-    scale = 1;
-    translateX = 0;
-    translateY = 0;
-    applyTransform();
-  });
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', () => {
+      const rect = map.getBoundingClientRect();
+      smoothZoom(scale * 1.2, rect.left + rect.width / 2, rect.top + rect.height / 2);
+    });
+  }
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', () => {
+      const rect = map.getBoundingClientRect();
+      smoothZoom(scale * 0.8, rect.left + rect.width / 2, rect.top + rect.height / 2);
+    });
+  }
+  if (zoomResetBtn) {
+    zoomResetBtn.addEventListener('click', () => {
+      scale = 1;
+      translateX = 0;
+      translateY = 0;
+      applyTransform();
+    });
+  }
 
-  // Click handler removed - now handled in setupMapTooltips
   setupMapTooltips(map, 'mapTooltipRoutes');
 }
 

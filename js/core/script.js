@@ -505,8 +505,6 @@ function startStartPointSelection(options = {}) {
     window.appState.selectedStartPointCoords = null;
   }
 
-  // Отдаём приоритет большой (модальной) карте, если она открыта,
-  // чтобы выбор точки всегда совпадал с тем, что пользователь видит в большом окне.
   const modalMap = document.getElementById('pmrMapModal');
   const modalRoutesMap = document.getElementById('pmrMapModalRoutes');
   const isModalMapVisible = modalMap && modalMap.closest('.modal') && modalMap.closest('.modal').classList.contains('modal--visible');
@@ -576,8 +574,6 @@ function getSVGCoordinates(map, evt) {
     const point = svg.createSVGPoint();
     point.x = evt.clientX;
     point.y = evt.clientY;
-    // Берём матрицу трансформации именно у слоя с содержимым карты,
-    // чтобы координаты корректно учитывали зум и панорамирование
     const content =
       svg.querySelector('#mapContent') ||
       svg.querySelector('#mapContentRoutes') ||
