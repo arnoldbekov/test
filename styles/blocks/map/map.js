@@ -213,6 +213,10 @@ function setupMapTooltips(mapElement, tooltipId) {
       const place = currentPlace;
       if (place) {
         hideTooltip(true);
+        const modalToClose = tooltip.closest('.modal');
+        if (modalToClose && typeof window.closeModal === 'function') {
+          window.closeModal(modalToClose);
+        }
         setTimeout(() => {
           if (typeof window.openObjectModal === 'function') {
             window.openObjectModal(place);
@@ -801,6 +805,10 @@ function setupMapTooltipsForModal() {
       const place = currentPlace;
       if (place) {
         hideTooltip(true);
+        const modalToClose = tooltip.closest('.modal');
+        if (modalToClose && typeof window.closeModal === 'function') {
+          window.closeModal(modalToClose);
+        }
         setTimeout(() => {
           if (typeof window.openObjectModal === 'function') {
             window.openObjectModal(place);
@@ -1194,6 +1202,10 @@ function setupMapTooltipsForModalRoutes() {
       const place = currentPlace;
       if (place) {
         hideTooltip(true);
+        const modalToClose = tooltip.closest('.modal');
+        if (modalToClose && typeof window.closeModal === 'function') {
+          window.closeModal(modalToClose);
+        }
         setTimeout(() => {
           if (typeof window.openObjectModal === 'function') {
             window.openObjectModal(place);
