@@ -49,7 +49,7 @@
   display: grid;
   gap: 1rem;
   max-height: 60vh;
-  overflow-y: hidden;
+  overflow-y: auto;
   padding-right: 0.5rem;
 }
 
@@ -144,7 +144,7 @@
   display: grid;
   gap: 1rem;
   max-height: 60vh;
-  overflow-y: hidden;
+  overflow-y: auto;
   padding-right: 0.5rem;
 }
 
