@@ -254,9 +254,12 @@
   .hero,
   .hero-section {
     padding: 3rem 0 5rem;
+    overflow: hidden;
+    max-width: 100vw;
   }
   .hero__grid,
   .hero-grid {
+    width: 100%;
     gap: 1.5rem;
   }
   .hero__card,

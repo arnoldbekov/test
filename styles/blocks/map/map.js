@@ -146,7 +146,7 @@ function setupMapTooltips(mapElement, tooltipId) {
   const tooltipDetailsBtn = tooltip.querySelector('.tooltip-details-btn');
   const mapWrapper = mapElement.closest('.map-wrapper') || mapElement.closest('.fullscreen-map-wrapper') || mapElement.closest('.map-modal-wrapper');
   if (!tooltipTitle || !tooltipDescription || !tooltipImage || !mapWrapper) return;
-  let currentZone = null, hideTimeout = null, showTimeout = null, currentPlace = null, isSticky = false;
+  let currentZone = null, hideTimeout = null, showTimeout = null, currentPlace = null, isSticky = false, isTouchPanning = false;
 
   function showTooltip(zone, place, sticky = false) {
     if (!place) {
@@ -286,6 +286,25 @@ function setupMapTooltips(mapElement, tooltipId) {
       showTooltip(zone, place, true);
     }
   }, true);
+
+  mapElement.addEventListener('touchstart', (evt) => {
+    if (evt.touches.length === 2) {
+      isTouchPanning = true;
+      return;
+    }
+    const zone = evt.target.closest('.map-zone');
+    if (zone && evt.touches.length === 1 && !isTouchPanning) {
+      evt.preventDefault();
+      const place = appState.places.find(p => p.id === Number(zone.dataset.id));
+      if (place) {
+        showTooltip(zone, place, true);
+      }
+    }
+  }, { passive: false });
+
+  mapElement.addEventListener('touchend', () => {
+    isTouchPanning = false;
+  });
 
   tooltip.addEventListener('click', (evt) => {
     if (evt.target.closest('.tooltip-details-btn') || evt.target.classList.contains('tooltip-details-btn')) {
@@ -715,7 +734,7 @@ function setupMapTooltipsForModal() {
   const tooltipDetailsBtn = tooltip.querySelector('.tooltip-details-btn');
   const mapWrapper = map.closest('.map-modal-wrapper');
   if (!tooltipTitle || !tooltipDescription || !tooltipImage || !mapWrapper) return;
-  let currentZone = null, hideTimeout = null, showTimeout = null, currentPlace = null, isSticky = false;
+  let currentZone = null, hideTimeout = null, showTimeout = null, currentPlace = null, isSticky = false, isTouchPanning = false;
 
   function showTooltip(zone, place, sticky = false) {
     if (!place) {
@@ -836,7 +855,7 @@ function setupMapTooltipsForModal() {
   });
 
   map.addEventListener('click', (evt) => {
-    if (isPanning) return;
+    if (isTouchPanning) return;
     if (evt.target.closest('.tooltip-details-btn') || evt.target.classList.contains('tooltip-details-btn')) {
       return;
     }
@@ -870,8 +889,12 @@ function setupMapTooltipsForModal() {
   });
 
   map.addEventListener('touchstart', (evt) => {
+    if (evt.touches.length === 2) {
+      isTouchPanning = true;
+      return;
+    }
     const zone = evt.target.closest('.map-zone');
-    if (zone && evt.touches.length === 1) {
+    if (zone && evt.touches.length === 1 && !isTouchPanning) {
       evt.preventDefault();
       const place = appState.places.find(p => p.id === Number(zone.dataset.id));
       if (place) {
@@ -879,6 +902,10 @@ function setupMapTooltipsForModal() {
       }
     }
   }, { passive: false });
+
+  map.addEventListener('touchend', () => {
+    isTouchPanning = false;
+  });
 }
 
 function setupMapModalRoutes() {
