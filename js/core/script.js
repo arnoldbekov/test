@@ -125,15 +125,13 @@ function getIntermediatePoint(p1, p2) {
 }
 
 function drawRoutePath(ids, startPointId = null, startPointCoords = null) {
-  const map = document.getElementById('pmrMap') || document.getElementById('pmrMapRoutes');
-  if (!map) return;
-  const content = map.querySelector('#mapContent') || map.querySelector('#mapContentRoutes');
-  if (!content) return;
-  let existingPath = content.querySelector('.route-path');
-  let existingMarker = content.querySelector('.start-point-marker');
-  if (existingPath) existingPath.remove();
-  if (existingMarker) existingMarker.remove();
-  if (!ids || ids.length === 0) return;
+  const maps = [
+    document.getElementById('pmrMapRoutes'),
+    document.getElementById('pmrMapModalRoutes'),
+    document.getElementById('pmrMap'),
+    document.getElementById('pmrMapModal')
+  ].filter(Boolean);
+  if (!maps.length || !ids || ids.length === 0) return;
   const optimizedIds = optimizeRoute(ids, startPointId, startPointCoords);
   if (optimizedIds.length < 1) return;
   let pathStartCoord = null;
@@ -142,25 +140,12 @@ function drawRoutePath(ids, startPointId = null, startPointCoords = null) {
   } else if (startPointCoords) {
     pathStartCoord = startPointCoords;
   }
-  if (pathStartCoord) {
-    const marker = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    marker.setAttribute('class', 'start-point-marker');
-    marker.setAttribute('cx', pathStartCoord.x);
-    marker.setAttribute('cy', pathStartCoord.y);
-    marker.setAttribute('r', '10');
-    marker.setAttribute('fill', '#00ff00');
-    marker.setAttribute('stroke', '#008000');
-    marker.setAttribute('stroke-width', '3');
-    content.appendChild(marker);
-  }
-  if (optimizedIds.length < 1) return;
   const coords = optimizedIds.map(id => getMapCoordinates(id)).filter(c => c !== null);
   if (coords.length < 1) return;
   if (!pathStartCoord && coords.length < 2) return;
   const SVG_WIDTH = 1000;
-  const SVG_HEIGHT = 700;
   const centerX = SVG_WIDTH / 2;
-  const centerY = SVG_HEIGHT / 2;
+  const centerY = 700 / 2;
   let pathData = '';
   if (pathStartCoord && coords.length > 0) {
     pathData = `M ${pathStartCoord.x} ${pathStartCoord.y}`;
@@ -195,17 +180,36 @@ function drawRoutePath(ids, startPointId = null, startPointCoords = null) {
     }
     pathData += ` L ${curr.x} ${curr.y}`;
   }
-  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute('class', 'route-path');
-  path.setAttribute('d', pathData);
-  path.setAttribute('fill', 'none');
-  path.setAttribute('stroke', '#b30000');
-  path.setAttribute('stroke-width', '3.5');
-  path.setAttribute('stroke-dasharray', '8,4');
-  path.setAttribute('opacity', '0.8');
-  path.setAttribute('stroke-linecap', 'round');
-  path.setAttribute('stroke-linejoin', 'round');
-  content.appendChild(path);
+  maps.forEach(m => {
+    const content = m.querySelector('#mapContentRoutes') || m.querySelector('#mapContent') || m.querySelector('#mapContentModalRoutes') || m.querySelector('#mapContentModal');
+    if (!content) return;
+    const existingPath = content.querySelector('.route-path');
+    const existingMarker = content.querySelector('.start-point-marker');
+    if (existingPath) existingPath.remove();
+    if (existingMarker) existingMarker.remove();
+    if (pathStartCoord) {
+      const marker = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      marker.setAttribute('class', 'start-point-marker');
+      marker.setAttribute('cx', pathStartCoord.x);
+      marker.setAttribute('cy', pathStartCoord.y);
+      marker.setAttribute('r', '10');
+      marker.setAttribute('fill', '#00ff00');
+      marker.setAttribute('stroke', '#008000');
+      marker.setAttribute('stroke-width', '3');
+      content.appendChild(marker);
+    }
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('class', 'route-path');
+    path.setAttribute('d', pathData);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', '#b30000');
+    path.setAttribute('stroke-width', '3.5');
+    path.setAttribute('stroke-dasharray', '8,4');
+    path.setAttribute('opacity', '0.8');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    content.appendChild(path);
+  });
 }
 
 function highlightRoute(ids, startPointId = null, startPointCoords = null) {
@@ -253,16 +257,25 @@ function showRouteSummary(titlePrefix, routePlaces, placeIds = null, startPointI
 }
 
 function getMapCoordinates(placeId) {
-  const map = document.getElementById('pmrMap') || document.getElementById('pmrMapRoutes');
-  if (!map) return null;
-  const zone = map.querySelector(`.map-zone[data-id="${placeId}"]`);
-  if (!zone) return null;
-  const pin = zone.querySelector('.map-pin');
-  if (!pin) return null;
-  return {
-    x: parseFloat(pin.getAttribute('cx')),
-    y: parseFloat(pin.getAttribute('cy'))
-  };
+  const maps = [
+    document.getElementById('pmrMapRoutes'),
+    document.getElementById('pmrMapModalRoutes'),
+    document.getElementById('pmrMap'),
+    document.getElementById('pmrMapModal')
+  ].filter(Boolean);
+  for (const map of maps) {
+    const zone = map.querySelector(`.map-zone[data-id="${placeId}"]`);
+    if (zone) {
+      const pin = zone.querySelector('.map-pin');
+      if (pin) {
+        return {
+          x: parseFloat(pin.getAttribute('cx')),
+          y: parseFloat(pin.getAttribute('cy'))
+        };
+      }
+    }
+  }
+  return null;
 }
 
 function calculateDistance(coord1, coord2) {
