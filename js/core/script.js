@@ -487,6 +487,8 @@ function startStartPointSelection(options = {}) {
   selectedStartPointCoords = null;
   isSelectingStartPoint = true;
   const map = document.getElementById('pmrMap') || document.getElementById('pmrMapRoutes');
+  const modalMap = document.getElementById('pmrMapModal');
+  const modalRoutesMap = document.getElementById('pmrMapModalRoutes');
   const mapSection = document.getElementById('map');
   if (mapSection) {
     mapSection.style.display = 'block';
@@ -502,17 +504,26 @@ function startStartPointSelection(options = {}) {
           showStartPointSelectionHint();
           setupStartPointMapClick(checkMap, { openModalOnSelect, onSelected });
         }
+        const checkModalRoutesMap = document.getElementById('pmrMapModalRoutes');
+        if (checkModalRoutesMap) {
+          showStartPointSelectionHint();
+          setupStartPointMapClick(checkModalRoutesMap, { openModalOnSelect, onSelected });
+        }
       }, 300);
     } else {
       showStartPointSelectionHint();
       setTimeout(() => {
         const checkMap = document.getElementById('pmrMap');
         if (checkMap) setupStartPointMapClick(checkMap, { openModalOnSelect, onSelected });
+        const checkModalMap = document.getElementById('pmrMapModal');
+        if (checkModalMap) setupStartPointMapClick(checkModalMap, { openModalOnSelect, onSelected });
       }, 100);
     }
   } else {
     showStartPointSelectionHint();
     setupStartPointMapClick(map, { openModalOnSelect, onSelected });
+    if (modalMap) setupStartPointMapClick(modalMap, { openModalOnSelect, onSelected });
+    if (modalRoutesMap) setupStartPointMapClick(modalRoutesMap, { openModalOnSelect, onSelected });
   }
 }
 
