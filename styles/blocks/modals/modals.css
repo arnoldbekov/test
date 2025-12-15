@@ -479,6 +479,27 @@
   object-fit: contain;
 }
 
+/* Keep the routes fullscreen map behavior identical to the main map */
+#mapModalRoutes .map-modal-wrapper {
+  overflow: visible;
+}
+
+#pmrMapModalRoutes {
+  touch-action: pan-x pan-y pinch-zoom;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+#mapModalRoutes .map-modal-wrapper svg {
+  max-width: none;
+  max-height: none;
+}
+
 @media (max-width: 992px) {
   .modal-dialog--map {
     max-width: 96vw;

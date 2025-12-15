@@ -186,6 +186,27 @@ p {
     -ms-text-size-adjust: 100%;
     -webkit-overflow-scrolling: touch;
   }
+  body {
+    background-attachment: scroll;
+  }
+  main,
+  section,
+  .map,
+  .timeline-section,
+  .stats-section,
+  .gallery-section,
+  .routes-section,
+  .hero,
+  .hero-section {
+    overflow-x: hidden;
+  }
+  .map-section .container,
+  .timeline-section .container,
+  .stats-section .container,
+  .gallery-section .container,
+  .routes .container {
+    overflow-x: hidden;
+  }
   .container {
     padding: 0 1rem;
     width: 100%;
