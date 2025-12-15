@@ -355,9 +355,18 @@ function setupMapInteractionsRoutes() {
     if (translateY > maxY) translateY = maxY;
   }
 
+  function syncTransform() {
+    if (!content) return;
+    content.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`);
+    const modals = document.querySelectorAll('#mapContentModalRoutes');
+    modals.forEach(modalContent => {
+      modalContent.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`);
+    });
+  }
+
   function applyTransform() {
     clampTransform();
-    if (content) content.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`);
+    syncTransform();
   }
 
   function smoothZoom(newScale, centerX, centerY) {
@@ -1009,9 +1018,18 @@ function setupMapInteractionsForModalRoutes() {
     if (translateY > maxY) translateY = maxY;
   }
 
+  function syncTransform() {
+    if (!content) return;
+    content.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`);
+    const routesContent = document.querySelectorAll('#mapContentRoutes');
+    routesContent.forEach(mainContent => {
+      mainContent.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`);
+    });
+  }
+
   function applyTransform() {
     clampTransform();
-    if (content) content.setAttribute('transform', `translate(${translateX} ${translateY}) scale(${scale})`);
+    syncTransform();
   }
 
   function smoothZoom(targetScale, centerX, centerY) {
