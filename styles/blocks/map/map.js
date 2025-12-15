@@ -148,6 +148,21 @@ function setupMapTooltips(mapElement, tooltipId) {
   if (!tooltipTitle || !tooltipDescription || !tooltipImage || !mapWrapper) return;
   let currentZone = null, hideTimeout = null, showTimeout = null, currentPlace = null, isSticky = false, isTouchPanning = false;
 
+  function closeMapModalsIfOpen() {
+    const modalToClose = tooltip.closest('.modal');
+    const mainMapModal = document.getElementById('mapModal');
+    const routesMapModal = document.getElementById('mapModalRoutes');
+    if (modalToClose && typeof window.closeModal === 'function') {
+      window.closeModal(modalToClose);
+    }
+    if (routesMapModal && routesMapModal.classList.contains('modal--visible') && typeof window.closeModal === 'function') {
+      window.closeModal(routesMapModal);
+    }
+    if (mainMapModal && mainMapModal.classList.contains('modal--visible') && typeof window.closeModal === 'function') {
+      window.closeModal(mainMapModal);
+    }
+  }
+
   function showTooltip(zone, place, sticky = false) {
     if (!place) {
       place = appState.places.find(p => p.id === Number(zone.dataset.id));
@@ -213,10 +228,7 @@ function setupMapTooltips(mapElement, tooltipId) {
       const place = currentPlace;
       if (place) {
         hideTooltip(true);
-        const modalToClose = tooltip.closest('.modal');
-        if (modalToClose && typeof window.closeModal === 'function') {
-          window.closeModal(modalToClose);
-        }
+        closeMapModalsIfOpen();
         setTimeout(() => {
           if (typeof window.openObjectModal === 'function') {
             window.openObjectModal(place);
@@ -740,6 +752,21 @@ function setupMapTooltipsForModal() {
   if (!tooltipTitle || !tooltipDescription || !tooltipImage || !mapWrapper) return;
   let currentZone = null, hideTimeout = null, showTimeout = null, currentPlace = null, isSticky = false, isTouchPanning = false;
 
+  function closeMapModalsIfOpen() {
+    const modalToClose = tooltip.closest('.modal');
+    const mainMapModal = document.getElementById('mapModal');
+    const routesMapModal = document.getElementById('mapModalRoutes');
+    if (modalToClose && typeof window.closeModal === 'function') {
+      window.closeModal(modalToClose);
+    }
+    if (routesMapModal && routesMapModal.classList.contains('modal--visible') && typeof window.closeModal === 'function') {
+      window.closeModal(routesMapModal);
+    }
+    if (mainMapModal && mainMapModal.classList.contains('modal--visible') && typeof window.closeModal === 'function') {
+      window.closeModal(mainMapModal);
+    }
+  }
+
   function showTooltip(zone, place, sticky = false) {
     if (!place) {
       place = appState.places.find(p => p.id === Number(zone.dataset.id));
@@ -805,10 +832,7 @@ function setupMapTooltipsForModal() {
       const place = currentPlace;
       if (place) {
         hideTooltip(true);
-        const modalToClose = tooltip.closest('.modal');
-        if (modalToClose && typeof window.closeModal === 'function') {
-          window.closeModal(modalToClose);
-        }
+        closeMapModalsIfOpen();
         setTimeout(() => {
           if (typeof window.openObjectModal === 'function') {
             window.openObjectModal(place);
@@ -1137,6 +1161,21 @@ function setupMapTooltipsForModalRoutes() {
   let currentZone = null, hideTimeout = null, showTimeout = null, currentPlace = null, isSticky = false;
   let isPanning = false;
 
+  function closeMapModalsIfOpen() {
+    const modalToClose = tooltip.closest('.modal');
+    const mainMapModal = document.getElementById('mapModal');
+    const routesMapModal = document.getElementById('mapModalRoutes');
+    if (modalToClose && typeof window.closeModal === 'function') {
+      window.closeModal(modalToClose);
+    }
+    if (routesMapModal && routesMapModal.classList.contains('modal--visible') && typeof window.closeModal === 'function') {
+      window.closeModal(routesMapModal);
+    }
+    if (mainMapModal && mainMapModal.classList.contains('modal--visible') && typeof window.closeModal === 'function') {
+      window.closeModal(mainMapModal);
+    }
+  }
+
   function showTooltip(zone, place, sticky = false) {
     if (!place) {
       place = appState.places.find(p => p.id === Number(zone.dataset.id));
@@ -1202,10 +1241,7 @@ function setupMapTooltipsForModalRoutes() {
       const place = currentPlace;
       if (place) {
         hideTooltip(true);
-        const modalToClose = tooltip.closest('.modal');
-        if (modalToClose && typeof window.closeModal === 'function') {
-          window.closeModal(modalToClose);
-        }
+        closeMapModalsIfOpen();
         setTimeout(() => {
           if (typeof window.openObjectModal === 'function') {
             window.openObjectModal(place);
