@@ -2,9 +2,9 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Галерея — HistoryTravel</title>
-  <meta name="description" content="HistoryTravel — сравните, как выглядели исторические объекты в прошлом и как они выглядят сегодня.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Исторические эпохи — HistoryTravel</title>
+  <meta name="description" content="Обзор исторических эпох и объектов культурного наследия Приднестровья в проекте HistoryTravel.">
   <link rel="stylesheet" href="../styles/style.css?v=12">
   <link rel="icon" href="../assets/img/logo.png" type="image/png" sizes="32x32">
   <link rel="shortcut icon" href="../assets/img/logo.png" type="image/png">
@@ -35,11 +35,50 @@
 </header>
 
 <main>
-  <section id="gallery" class="gallery-section gallery" aria-labelledby="gallery-title" data-aos="fade-up" data-aos-duration="1000">
+  <section class="timeline-section" aria-labelledby="periods-title" style="padding-top: 7rem;" data-aos="fade-up" data-aos-duration="900">
     <div class="container">
-      <h2 id="gallery-title">Галерея объектов</h2>
-      <p class="section-lead">Просмотрите фотографии объектов культурного и исторического наследия. Для объектов с архивными фотографиями доступно сравнение «тогда и сейчас». Нажмите на карточку, чтобы открыть просмотр фотографий.</p>
-      <div class="gallery-grid gallery__grid" id="galleryGrid">
+      <h2 id="periods-title">Исторические эпохи в проекте</h2>
+      <p class="section-lead">Здесь собраны основные временные периоды, которые используются на карте и в статистике.</p>
+      <p>На главной странице вы можете переключать эпохи прямо на временной шкале, 
+         а здесь — спокойно прочитать об их особенностях и примерах объектов.</p>
+    </div>
+  </section>
+
+  <section class="timeline-section" aria-label="Список исторических периодов">
+    <div class="container">
+      <div class="timeline-events">
+        <article class="period-card" data-aos="fade-up" data-aos-delay="50">
+          <h3>Древность</h3>
+          <p>Эпоха ранних поселений и кочевых культур. Для Приднестровья это стоянки первобытных людей, 
+             киммерийские и скифские погребения, курганы и археологические комплексы.</p>
+          <p><strong>Примеры объектов:</strong> киммерийские погребения у села Глиное, 
+             скифские курганы у села Бутор, пещерные стоянки в Каменском и Рыбницком районах.</p>
+          <p><a href="../index.html#timeline" class="btn-secondary">Посмотреть объекты на шкале</a></p>
+        </article>
+
+        <article class="period-card" data-aos="fade-up" data-aos-delay="100">
+          <h3>Средневековье</h3>
+          <p>Период формирования укреплённых поселений, монастырей, торговых путей. 
+             В это время появляются крепости на Днестре и крупные религиозные центры.</p>
+          <p><strong>Примеры объектов:</strong> Бендерская крепость, Тираспольская крепость (бастион Святого Владимира), 
+             монастырский комплекс в Каменке.</p>
+        </article>
+
+        <article class="period-card" data-aos="fade-up" data-aos-delay="150">
+          <h3>Новое время</h3>
+          <p>Связано с развитием городов, промышленности и военной истории XIX–XX веков: 
+             фортификационные сооружения, мемориалы, памятники героям войн, промышленные объекты.</p>
+          <p><strong>Примеры объектов:</strong> мемориалы воинской славы, Дубоссарская ГЭС, 
+             памятники Марии Кулькиной, Прометею и другим героям эпохи.</p>
+        </article>
+
+        <article class="period-card" data-aos="fade-up" data-aos-delay="200">
+          <h3>Современность</h3>
+          <p>Поздний XX — начало XXI века: экологические инициативы, новые парки, обновлённые мемориалы, 
+             музеи под открытым небом. Эти объекты показывают, как регион сохраняет и переосмысливает наследие.</p>
+          <p><strong>Примеры объектов:</strong> заповедник «Ягорлык», Рашковский природный комплекс, 
+             парк имени П. Х. Витгенштейна, современные мемориальные комплексы.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -96,28 +135,7 @@
   </div>
 </footer>
 
-<div class="modal" id="objectModal" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-labelledby="objTitle" aria-modal="true">
-    <button class="close" type="button" aria-label="Закрыть окно с описанием объекта">×</button>
-    <h2 id="objTitle"></h2>
-    <div id="objContent"></div>
-  </div>
-</div>
-
-<div class="modal" id="compareModal" aria-hidden="true">
-  <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="compareTitle">
-    <button class="close" type="button" aria-label="Закрыть окно сравнения">×</button>
-    <div class="modal-nav">
-      <button id="comparePrev" type="button" aria-label="Предыдущая карточка">‹</button>
-      <button id="compareNext" type="button" aria-label="Следующая карточка">›</button>
-    </div>
-    <h3 id="compareTitle">Тогда и сейчас</h3>
-    <div class="compare" id="compareContainer"></div>
-  </div>
-</div>
-
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script src="../js/core/map-renderer.js"></script>
 <script src="../js/core/script.js"></script>
 <script type="module" src="../js/core/main.js"></script>
 </body>

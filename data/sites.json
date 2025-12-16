@@ -121,8 +121,8 @@
     "period": "modern",
     "type": "memorial",
     "images": {
-      "old": "image/Poezda-bender-old.jpg",
-      "now": "image/Poezda-bender-now.jpg"
+      "old": "image/poezda-bender-old.jpg",
+      "now": "image/poezda-bender-now.jpg"
     },
     "captionNow": "Мемориал в современном виде.",
     "address": "г. Бендеры, ул. Академика Фёдорова, д. 6,",
