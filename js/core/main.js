@@ -66,8 +66,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.style.scrollBehavior = 'smooth';
   }
   
-  if (window.AOS) {
+  // Отключаем AOS на мобильных для производительности
+  const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (window.AOS && !isMobile) {
     AOS.init({ duration: 800, once: true, offset: 100, easing: 'ease-out-cubic', delay: 0 });
+  }
+  
+  // Всегда инициализируем мобильное меню
+  if (typeof initMobileMenu === 'function') {
+    initMobileMenu();
   }
   
   window.addEventListener('hashchange', () => {

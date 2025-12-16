@@ -70,3 +70,38 @@
   50% { filter: drop-shadow(0 6px 30px rgba(212, 175, 55, 0.3)) drop-shadow(0 12px 40px rgba(212, 175, 55, 0.2)) drop-shadow(0 0 20px rgba(212, 175, 55, 0.25)); }
 }
 
+/* Отключаем тяжелые анимации на мобильных для производительности */
+@media (max-width: 768px) {
+  /* Отключаем AOS анимации */
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  /* Упрощаем или отключаем сложные анимации */
+  .hero::before,
+  .hero::after {
+    animation: none !important;
+    display: none;
+  }
+  
+  .hero-logo,
+  .hero__logo {
+    animation: none !important;
+  }
+  
+  /* Упрощаем hover эффекты */
+  *:hover {
+    transform: none !important;
+  }
+  
+  /* Отключаем backdrop-filter на слабых устройствах */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+

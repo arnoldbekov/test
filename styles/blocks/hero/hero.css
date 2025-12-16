@@ -19,6 +19,7 @@
   border-radius: 50%;
   animation: float 20s ease-in-out infinite;
   z-index: 0;
+  will-change: transform;
 }
 
 .hero::after {
@@ -32,6 +33,7 @@
   border-radius: 50%;
   animation: float 15s ease-in-out infinite reverse;
   z-index: 0;
+  will-change: transform;
 }
 
 .hero > .container {
@@ -270,6 +272,13 @@
   .hero-logo {
     max-width: 200px;
     bottom: -80px;
+    animation: none !important;
+    opacity: 0.2;
+  }
+  /* Отключаем тяжелые анимации на мобильных */
+  .hero::before,
+  .hero::after {
+    animation: none !important;
   }
 }
 
@@ -287,6 +296,14 @@
   .hero-logo {
     max-width: 150px;
     bottom: -60px;
+    animation: none !important;
+    opacity: 0.15;
+    display: none; /* Скрываем на очень маленьких экранах */
+  }
+  /* Полностью отключаем декоративные элементы */
+  .hero::before,
+  .hero::after {
+    display: none;
   }
 }
 

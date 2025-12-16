@@ -9,7 +9,14 @@ import { checkAndFocusPlaceOnLoad, initMobileMenu } from './navigation.js';
 import { renderObjectGrid } from '../../styles/blocks/cards/cards.js';
 
 function initApp() {
-  if (typeof initMobileMenu === 'function') initMobileMenu();
+  // Мобильное меню уже инициализировано в DOMContentLoaded, но на всякий случай проверяем
+  if (typeof initMobileMenu === 'function') {
+    const toggle = document.getElementById('menuToggle');
+    if (toggle && !toggle.dataset.initialized) {
+      initMobileMenu();
+      toggle.dataset.initialized = 'true';
+    }
+  }
   if (typeof window.setupTimeline === 'function') window.setupTimeline();
   if (typeof window.setupSearch === 'function') window.setupSearch();
   if (typeof window.setupMapInteractions === 'function') window.setupMapInteractions();
