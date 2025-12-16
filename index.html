@@ -43,7 +43,10 @@
       <div class="hero__content">
         <h2 id="hero-title">Откройте культурное наследие своего региона</h2>
         <p>Исследуйте интерактивную карту, выбирайте исторические эпохи, стройте собственные маршруты и сравнивайте архивные и современные фотографии объектов.</p>
-        <a href="#map" class="btn-primary">Перейти к карте</a>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+          <a href="#map" class="btn-primary">Перейти к карте</a>
+          <a href="pages/periods.html" class="btn-secondary">Подробнее об эпохах</a>
+        </div>
         <img src="assets/img/logo.png" alt="HistoryTravel" class="hero-logo" data-aos="fade-down">
       </div>
       <div class="hero-card hero__card" data-aos="fade-left">
@@ -74,7 +77,7 @@
       <div class="map-header map__header">
         <div>
           <h2 id="map-title-wrapper">Интерактивная карта региона</h2>
-          <p>Наведите курсор или нажмите на отметку на карте, чтобы узнать больше об объекте. Масштаб карты условный и предназначен для учебных целей.</p>
+          <p>Наведите курсор или нажмите на отметку на карте, чтобы узнать больше об объекте. Масштаб карты условный и служит для наглядного отображения.</p>
         </div>
         <button type="button" id="openMapModalBtn" class="btn-secondary map-fullscreen-btn" aria-label="Открыть карту в полном размере">Открыть карту</button>
       </div>
@@ -120,7 +123,7 @@
     <div class="container stats-layout">
       <div>
         <h2 id="stats-title">Статистика по историческим периодам</h2>
-        <p>Диаграмма показывает распределение объектов по эпохам. Данные формируются автоматически на основе исторической базы из JSON.</p>
+        <p>Диаграмма показывает, как распределяются объекты по эпохам. Так проще увидеть, какие исторические периоды представлены на карте наиболее полно.</p>
         <ul class="stats-list" id="statsList"></ul>
       </div>
       <div class="chart-wrapper" role="img" aria-label="Диаграмма количества объектов по эпохам">
